@@ -1,0 +1,14 @@
+# Java
+*.class
+
+# Eclipse
+bin/
+
+# Gradle
+.gradle
+build/
+
+# shared object
+*.dll
+*.dylib
+*.so
