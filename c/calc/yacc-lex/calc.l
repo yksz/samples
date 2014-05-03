@@ -4,14 +4,14 @@
 
 extern int yylval;
 
-int yywrap(void) {
+int yywrap(void)
+{
     return 1;
 }
 %}
 
 %%
 
-^exit$ exit(0);
 "+" return ADD;
 "-" return SUB;
 "*" return MUL;

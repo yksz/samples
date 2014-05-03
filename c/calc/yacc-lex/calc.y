@@ -1,5 +1,8 @@
 %{
 #include <stdio.h>
+
+int yylex();
+int yyerror(const char* s);
 %}
 %token LF
 %token NUMBER
@@ -35,11 +38,13 @@ term
 
 %%
 
-int yyerror(const char *s) {
+int yyerror(const char* s)
+{
     fprintf(stderr, "ERROR: %s\n", s);
     return 0;
 }
 
-int main() {
+int main()
+{
     return yyparse();
 }
