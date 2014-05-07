@@ -4,12 +4,13 @@ DST = src/main/resources/$(TARGET)
 SRCS := $(wildcard src/main/c/*.c)
 
 CC = gcc
-CFLAGS = -fPIC -shared
+CFLAGS = -fPIC
+LDFLAGS = -shared
 
 all: $(TARGET)
 
 $(TARGET):
-		$(CC) $(CFLAGS) -o $(DST) $(SRCS)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $(DST) $(SRCS)
 
 clean:
 		rm $(DST)

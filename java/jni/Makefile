@@ -5,13 +5,13 @@ SRCS = src/main/c/lib_TestLibrary.c
 JAVA_INCLUDE = /System/Library/Frameworks/JavaVM.framework/Headers
 
 CC = gcc
-INCLUDES = -I $(JAVA_INCLUDE)
-CFLAGS = -fPIC -shared $(INCLUDES)
+CFLAGS = -fPIC -I$(JAVA_INCLUDE)
+LDFLAGS = -shared
 
 all: $(TARGET)
 
 $(TARGET):
-		$(CC) $(CFLAGS) -o $(DST) $(SRCS)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $(DST) $(SRCS)
 
 clean:
 		rm $(DST)
