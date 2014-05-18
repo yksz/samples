@@ -17,7 +17,7 @@ func NewServer(port string) *Server {
 }
 
 func (s *Server) Start() {
-	log.Print("the chat server started: port=" + s.port)
+	log.Print("the chat server is listening on port " + s.port)
 	ln, err := net.Listen("tcp", ":"+s.port)
 	if err != nil {
 		log.Fatal(err)

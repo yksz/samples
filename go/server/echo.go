@@ -19,7 +19,9 @@ func init() {
 }
 
 func echoHandler(w http.ResponseWriter, req *http.Request) {
+	requestLine := req.Method + " " + req.URL.String() + " " + req.Proto + "\n"
 	header := toString(req.Header)
+	io.WriteString(w, requestLine)
 	io.WriteString(w, header)
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
@@ -27,7 +29,7 @@ func echoHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	w.Write(body)
-	w.Header().Add("Content-Length", strconv.Itoa(len(header)+len(body)))
+	w.Header().Add("Content-Length", strconv.Itoa(len(requestLine)+len(header)+len(body)))
 }
 
 func toString(header http.Header) string {
@@ -43,7 +45,7 @@ func toString(header http.Header) string {
 }
 
 func main() {
-	log.Print("the echo server started: port=" + port)
+	log.Print("the echo server is listening on port " + port)
 	http.HandleFunc("/", echoHandler)
 	http.ListenAndServe(":"+port, nil)
 }
