@@ -6,14 +6,18 @@ class Channel {
     def queue
 
     Channel() {
-        queue = new ArrayBlockingQueue(1)
+        this(1)
+    }
+
+    Channel(int buffer) {
+        queue = new ArrayBlockingQueue(buffer)
     }
 
     def send(msg) {
         queue.put(msg)
     }
 
-    def receive(msg) {
+    def receive() {
         return queue.take()
     }
 
