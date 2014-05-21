@@ -1,12 +1,12 @@
-class Hoge {
+class Console {
     def leftShift(str) {
-        println "leftShift: $str"
+        println "<< $str"
     }
     def rightShift(str) {
-        println "rightShift: $str"
+        println ">> $str"
     }
 }
 
-def hoge = new Hoge()
-hoge << "a"
-hoge >> "b"
+def console = new Console()
+console << "a"
+console >> "b"
