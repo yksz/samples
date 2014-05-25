@@ -12,19 +12,13 @@ assert [1,2,3] << [4] == [1,2,3,[4]]
 assert [1,*[2,3]]     == [1,2,3]
 
 //  - util
-assert [1,3,3].count(3) == 2
-assert [1,2,3].max()    == 3
-assert [1,2,3].min()    == 1
-assert [1,2,3].sum()    == 6
-assert [3,2,1].sort()   == [1,2,3]
-assert [1,3,3].unique() == [1,3]
-
-//  - other
-assert [1,2,3].disjoint([3,4,5])    == false
-assert [1,2,3].disjoint([4,5,6])    == true
-assert [1,2,3,4].intersect([3,4,5]) == [3,4]
-assert [1,[2,3]].flatten()          == [1,2,3]
-assert [1,2,3].join(",")            == "1,2,3"
+assert [1,3,3].count(3)  == 2
+assert [1,2,3].join(",") == "1,2,3"
+assert [1,2,3].max()     == 3
+assert [1,2,3].min()     == 1
+assert [1,2,3].sum()     == 6
+assert [3,2,1].sort()    == [1,2,3]
+assert [1,3,3].unique()  == [1,3]
 
 //  - closure
 assert [1,2,3].any { it > 2 }              == true  // or
@@ -40,6 +34,12 @@ assert [1,2,3].split { it % 2 == 0 }       == [[2],[1,3]]
 assert ["ab","ac","bc"].find { it =~ /a+/ }    == "ab"
 assert ["ab","ac","bc"].findAll { it =~ /a+/ } == ["ab","ac"]
 assert ["ab","ac","bc"].grep(~/a.+/ )          == ["ab","ac"]
+
+//  - other
+assert [1,2,3].disjoint([3,4,5])    == false
+assert [1,2,3].disjoint([4,5,6])    == true
+assert [1,2,3,4].intersect([3,4,5]) == [3,4]
+assert [1,[2,3]].flatten()          == [1,2,3]
 
 // 2. list
 assert [1,2,3].first() == 1
