@@ -27,7 +27,7 @@ assert [1,2,3].collect { it + 1 }          == [2,3,4]
 assert [1,2,3,4].find { it % 2 == 0 }      == 2
 assert [1,2,3,4].findAll { it % 2 == 0 }   == [2,4]
 assert [1,2,3].groupBy { it % 2 }          == [1:[1,3], 0:[2]]
-assert [1,2,3].inject { ret, i -> ret + i} == (((0+1)+2)+3)
+assert [1,2,3].inject { acc, v -> acc + v} == (((0+1)+2)+3)
 assert [1,2,3].split { it % 2 == 0 }       == [[2],[1,3]]
 
 //  - regexp
