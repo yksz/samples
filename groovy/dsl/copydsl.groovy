@@ -4,8 +4,9 @@ class CopyDSL {
 
     static def copy(Closure closure) {
         CopyDSL dsl = new CopyDSL()
-        closure.delegate = dsl
-        closure()
+        def c = closure.clone() // thread safe
+        c.delegate = dsl
+        c()
         println "copy: from=$dsl.from, into=$dsl.into"
     }
 
