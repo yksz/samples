@@ -25,3 +25,8 @@ assert [a:1,b:2,c:3].drop(1) == [b:2,c:3]
 assert [a:1,b:2,c:3].drop(3) == [:]
 assert [a:1,b:2].get("c", 3) == 3
 assert [a:1,b:2,c:3].intersect([b:2,c:3,d:4]) == [b:2,c:3]
+
+def map = [a:1,b:2,c:3]
+assert map.a == 1
+assert map.b == 2
+assert map.c == 3
