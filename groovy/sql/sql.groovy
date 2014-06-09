@@ -8,6 +8,7 @@ def db = [
     driver:'org.h2.Driver'
 ]
 def sql = Sql.newInstance(db.url, db.user, db.password, db.driver)
+
 sql.execute '''
     create table PROJECT (
         id integer not null,
@@ -15,3 +16,12 @@ sql.execute '''
         url varchar(100),
     )
 '''
+
+def params = [10, 'Groovy', 'http://groovy.codehaus.org']
+sql.execute 'insert into PROJECT (id, name, url) values (?, ?, ?)', params
+
+sql.eachRow('select * from PROJECT') { row ->
+    println "${row.name.padRight(10)} ($row.url)"
+}
+
+sql.close()
