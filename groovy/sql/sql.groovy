@@ -1,4 +1,4 @@
-@Grab(group='com.h2database', module='h2', version='1.4.+')
+@Grab(group='com.h2database', module='h2', version='1.3.+')
 import groovy.sql.Sql
 
 def db = [
