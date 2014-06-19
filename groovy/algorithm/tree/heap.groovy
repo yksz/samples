@@ -17,8 +17,8 @@ class PriorityQueue<E> {
         heap.delete()
     }
 
-    void print() {
-        heap.print()
+    String toString() {
+        heap.toString()
     }
 }
 
@@ -93,41 +93,47 @@ class Heap<E> {
         array[index] = data
     }
 
-    void print() {
-        int height = (int) (Math.log(size)/Math.log(2) + 0.5) + 1
-        for (i in 1..height) {
-            int begin = Math.pow(2, i-1)
-            int end = Math.pow(2, i)
+    String toString() {
+        def sb = new StringBuilder()
+        def log2 = { x -> Math.log(x) / Math.log(2) }
+        int height = log2(size) + 1
+        for (i in 0..<height) {
+            int begin = 2 ** i
+            int end = 2 ** (i+1)
+            int indent = getIndent(i, height)
             for (int j = begin; j < end && j <= size; j++) {
-                if (i == height) {
-                    print ' '
-                    print array[j]
-                } else {
-                    if (j == begin) {
-                        print ' ' * (height - i) * 2
-                    }
-                    print array[j]
-                    print '   '
-                }
+                if (j == begin)
+                    sb << ' ' * indent
+                sb << array[j]
+                sb << ' ' * (indent*2 + 1)
             }
-            println()
+            sb << '\n'
         }
+        sb.toString()
+    }
+
+    // 0 <= row < height
+    private def getIndent(row, height) {
+        def indent = 0
+        for (i in 0..<height-1 - row)
+            indent = indent*2 + 1
+        return indent
     }
 }
 
 def queue = new PriorityQueue<Integer>(6)
 queue.dequeue()
-queue.enqueue(9)
-queue.enqueue(8)
-queue.enqueue(7)
-queue.enqueue(6)
-queue.print()
-queue.dequeue()
-queue.dequeue()
-queue.print()
-queue.enqueue(5)
-queue.enqueue(4)
-queue.enqueue(3)
-queue.enqueue(2)
 queue.enqueue(1)
-queue.print()
+queue.enqueue(3)
+queue.enqueue(5)
+queue.enqueue(2)
+queue.enqueue(4)
+println queue
+queue.dequeue()
+queue.dequeue()
+println queue
+queue.enqueue(7)
+queue.enqueue(9)
+queue.enqueue(6)
+queue.enqueue(8)
+println queue
