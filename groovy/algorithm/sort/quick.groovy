@@ -3,24 +3,24 @@ def sort(array) {
 }
 
 def quicksort(array, left, right) {
-    if (left >= right)
-        return
-    int i = left, j = right
-    int middle = (left + right) / 2
-    def pivot = median(array[left], array[right], array[middle])
-    while (true) {
-        while (array[i] < pivot)
+    if (left < right) {
+        int middle = (left + right) / 2
+        def pivot = median(array[left], array[right], array[middle])
+        int i = left, j = right
+        while (i <= j) {
+            while (array[i] < pivot)
+                i++
+            while (pivot < array[j])
+                j--
+            if (i > j)
+                break
+            Collections.swap(array, i, j)
             i++
-        while (pivot < array[j])
             j--
-        if (i > j)
-            break
-        Collections.swap(array, i, j)
-        i++
-        j--
+        }
+        quicksort(array, left, j)
+        quicksort(array, i, right)
     }
-    quicksort(array, left, j)
-    quicksort(array, i, right)
 }
 
 def median(x, y, z) {
