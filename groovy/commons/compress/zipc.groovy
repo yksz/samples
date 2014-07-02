@@ -4,6 +4,7 @@
 ])
 import org.apache.commons.compress.archivers.zip.*
 import org.apache.commons.io.*
+import org.apache.commons.io.filefilter.*
 
 def compress(String src, String dst) {
     def output = new ZipArchiveOutputStream(new FileOutputStream(dst))
@@ -11,7 +12,8 @@ def compress(String src, String dst) {
         def srcFile = new File(src)
         def base = srcFile.parentFile.absolutePath
         if (srcFile.isDirectory()) {
-            for (file in FileUtils.listFiles(srcFile, null, true)) {
+            def files = FileUtils.listFilesAndDirs(srcFile, TrueFileFilter.TRUE, TrueFileFilter.TRUE)
+            for (file in files) {
                 if (file.isDirectory()) {
                     putDir(output, file, base)
                 } else {
