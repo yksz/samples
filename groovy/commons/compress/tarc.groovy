@@ -55,7 +55,7 @@ if (args.length < 1) {
     System.exit(1)
 }
 def src = args[0]
-def dst = src + '.tar'
+def dst = new File(src).canonicalPath + '.tar'
 long start = System.currentTimeMillis()
 compress(src, dst)
 long stop = System.currentTimeMillis()
