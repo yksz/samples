@@ -1,5 +1,12 @@
 assert [] instanceof ArrayList == true
 
+def list = [1,2,3]
+assert list[0] == 1
+assert list[-1] == 3
+assert list[1..2] == [2,3]
+assert list.pop() == 3 && list == [1,2]
+assert list.push(3) && list == [1,2,3]
+
 // 1. Collection or Iterable
 // - loop
 x = 1
@@ -63,10 +70,3 @@ assert [1,2,3].take(1) == [1]
 assert [1,2,3].take(3) == [1,2,3]
 assert [1,2,3].reverse() == [3,2,1]
 assert [['a','b'],[1,2]].transpose() == [['a',1],['b',2]]
-
-def list = [1,2,3]
-assert list[0] == 1
-assert list[-1] == 3
-assert list[1..2] == [2,3]
-assert list.pop() == 3 && list == [1,2]
-assert list.push(3) && list == [1,2,3]

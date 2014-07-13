@@ -1,5 +1,10 @@
 assert [:] instanceof LinkedHashMap == true
 
+def map = [a:1,b:2,c:3]
+assert map.a == 1
+assert map.b == 2
+assert map.c == 3
+
 // - loop
 x = 1
 for (e in [a:1,b:2,c:3]) assert e.value == x++
@@ -42,8 +47,3 @@ assert [b:1,c:2,a:3].sort()*.value == [3,1,2]
 assert [a:1,b:2,c:3].subMap(["a","c"]) == [a:1,c:3]
 assert [a:1,b:2,c:3].take(1) == [a:1]
 assert [a:1,b:2,c:3].take(3) == [a:1,b:2,c:3]
-
-def map = [a:1,b:2,c:3]
-assert map.a == 1
-assert map.b == 2
-assert map.c == 3

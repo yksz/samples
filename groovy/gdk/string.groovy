@@ -1,3 +1,8 @@
+def str = 'abc'
+assert str[0] == 'a'
+assert str[-1] == 'c'
+assert str[1..2] == 'bc'
+
 // - loop
 x = 1
 for (i in '123') assert i == "${x++}"
