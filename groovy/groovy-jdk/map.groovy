@@ -4,6 +4,8 @@ def map = [a:1,b:2,c:3]
 assert map.a == 1
 assert map.b == 2
 assert map.c == 3
+def hogehoge = 'a'
+println map[hogehoge]
 
 // - loop
 x = 1
