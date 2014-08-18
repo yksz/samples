@@ -5,11 +5,11 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
     <servlet>
-        <servlet-name>notfound</servlet-name>
+        <servlet-name>notFoundServlet</servlet-name>
         <servlet-class>NotFoundServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>notfound</servlet-name>
+        <servlet-name>notFoundServlet</servlet-name>
         <url-pattern>/Main.class</url-pattern>
         <url-pattern>/javax/*</url-pattern>
         <url-pattern>/org/*</url-pattern>
