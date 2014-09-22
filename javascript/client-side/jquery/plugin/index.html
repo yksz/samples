@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="jquery-1.11.1.min.js"><\/script>')</script>
+    <script src="myplugin.js"></script>
+    <script>
+      $(function(){
+        $("ul.menu li a").myplugin({padding: '50px'});
+      });
+    </script>
+  </head>
+  <body>
+    <ul class="menu">
+      <li><a href="#">Menu1</a></li>
+      <li><a href="#">Menu2</a></li>
+      <li><a href="#">Menu3</a></li>
+    </ul>
+  </body>
+</html>
