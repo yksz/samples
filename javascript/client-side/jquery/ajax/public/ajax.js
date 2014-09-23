@@ -17,7 +17,7 @@ function ajax() {
     var json = JSON.parse(data);
     var date = new Date(json.time);
     var time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-    $("div#time").html('<h1>' + time + '</h1>');
+    $('div#time').html('<h1>' + time + '</h1>');
   }).fail(function(xhr, status, error) {
   }).always(function(arg1, status, arg2) {
   });

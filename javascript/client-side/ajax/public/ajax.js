@@ -11,7 +11,7 @@ function ajax() {
         response.innerHTML = '<h1>' + xhr.responseText + '</h1>';
       }
     }
-  }
+  };
   xhr.open('GET', '/ajax', true);
   xhr.send(null);
 }
