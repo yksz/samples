@@ -13,4 +13,7 @@ Plane.mixin(FlyingAbility)
 class Submarine {}
 
 assert new Plane().fly() == "fly"
-assert new DivingAbility().dive() == "dive"
+assert new Submarine().dive() == "dive"
+
+assert !(new Plane() instanceof FlyingAbility)
+assert !(new Submarine() instanceof DivingAbility)
