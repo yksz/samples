@@ -1,5 +1,5 @@
 $.contains(document.documentElement, document.body); // => true
-$.extend({a:1, b:2}, {c:3}); // => {a:1, b:2, c:3}
+$.extend({a:1, b:2}, {b:3, c:4}); // => {a:1, b:3, c:4}
 $.globalEval('var newVar = true;');
 $.grep([1,2,3], function(e, i) { return e > 1 }); // => [2,3]
 $.inArray('b', ['a',1,'b',2,'c',3]); // => 2
