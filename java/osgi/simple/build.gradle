@@ -1,0 +1,34 @@
+apply plugin: 'java'
+apply plugin: 'osgi'
+
+version = '1.0.0'
+
+ext {
+    felixHome = 'FELIX_HOME'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.osgi:org.osgi.core:4.3.1'
+}
+
+jar {
+    manifest {
+        instruction 'Bundle-Name', 'Simple Bundle'
+        instruction 'Bundle-Vendor', 'Apache Felix'
+        instruction 'Bundle-Activator', 'simple.Activator'
+    }
+}
+
+task deploy(dependsOn: jar) << {
+    def felix = System.getenv(felixHome)
+    if (felix == null)
+        throw new StopActionException("'$felixHome' is not found")
+    copy {
+        from "$buildDir/libs"
+        into "$felix/bundle"
+    }
+}
