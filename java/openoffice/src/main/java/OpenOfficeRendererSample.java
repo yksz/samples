@@ -6,9 +6,9 @@ import javax.print.PrintServiceLookup;
 
 import openoffice.OpenOfficeRenderer;
 
-public class OpenOfficeRendererTest {
+public class OpenOfficeRendererSample {
 
-    private static final String RESOURCE_DIRECTORY = "src/test/resources/";
+    private static final String RESOURCE_DIRECTORY = "src/main/resources/";
 
     public static void main(String args[]) throws Exception {
         List<String> files = new ArrayList<String>();
