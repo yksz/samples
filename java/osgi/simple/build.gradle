@@ -4,7 +4,7 @@ apply plugin: 'osgi'
 version = '1.0.0'
 
 ext {
-    felixHome = 'FELIX_HOME'
+    felixEnv = 'FELIX_HOME'
 }
 
 repositories {
@@ -23,12 +23,12 @@ jar {
     }
 }
 
-task deploy(dependsOn: jar) << {
-    def felix = System.getenv(felixHome)
-    if (felix == null)
-        throw new StopActionException("'$felixHome' is not found")
+task deploy(dependsOn: jar) {
+    def felixHome = System.getenv(felixEnv)
+    if (felixHome == null)
+        throw new StopActionException("'$felixEnv' is not found")
     copy {
         from "$buildDir/libs"
-        into "$felix/bundle"
+        into "$felixHome/bundle"
     }
 }
