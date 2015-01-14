@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ $# -lt 1 ]; then
-    echo 'usage: sql.sh <sql file>'
+    echo 'usage: ./sql.sh <sql file>'
     exit 1
 fi
 
