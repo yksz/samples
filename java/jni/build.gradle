@@ -1,8 +1,14 @@
+apply plugin: 'java'
 apply plugin: 'application'
 
-sourceCompatibility = 1.6
+task javah(type: Exec, dependsOn: classes) {
+    def srcClassName="lib.TestLibrary"
+    def srcClassesDir = "$buildDir/classes/main"
+    def dstDir = "src/main/c"
+    commandLine 'javah', '-cp', srcClassesDir, '-d', dstDir, srcClassName
+}
 
 run {
-    main = "JNISample"
-    systemProperties = ["java.library.path": "src/main/resources"]
+    main = "JNIMain"
+    systemProperties = ["java.library.path": "lib"]
 }

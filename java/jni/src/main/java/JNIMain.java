@@ -1,6 +1,6 @@
 import lib.TestLibrary;
 
-public class JNISample {
+public class JNIMain {
 
     static {
         System.loadLibrary("lib_TestLibrary");
