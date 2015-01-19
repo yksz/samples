@@ -11,10 +11,10 @@ LDFLAGS = -L/usr/local/lib -lopencv_core -lopencv_highgui
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-		$(CC) -o $@ $(LDFLAGS) $^
+	$(CC) -o $@ $(LDFLAGS) $^
 
 .c.o: $<
-		$(CC) -c $(CFLAGS) $<
+	$(CC) -c $(CFLAGS) $<
 
 clean:
-		rm $(TARGET) $(OBJS)
+	rm $(TARGET) $(OBJS)

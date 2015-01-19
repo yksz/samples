@@ -10,10 +10,10 @@ CFLAGS = -Wall
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-		$(AR) r $@ $^
+	$(AR) r $@ $^
 
 .c.o: $<
-		$(CC) -c $(CFLAGS) $<
+	$(CC) -c $(CFLAGS) $<
 
 clean:
-		rm $(TARGET) $(OBJS)
+	rm $(TARGET) $(OBJS)
