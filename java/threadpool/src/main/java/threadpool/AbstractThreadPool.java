@@ -10,7 +10,7 @@ public abstract class AbstractThreadPool<T> {
     private BlockingQueue<T> queue;
     private Thread[] threads;
 
-    private boolean isStarted;
+    private boolean started;
 
     public AbstractThreadPool(int maxQueueSize, int numberOfThreads) {
         if (maxQueueSize < 1)
@@ -26,10 +26,10 @@ public abstract class AbstractThreadPool<T> {
     }
 
     public synchronized void start() {
-        if (isStarted)
+        if (started)
             throw new IllegalStateException("threads have been already started");
 
-        isStarted = true;
+        started = true;
 
         for (Thread thread : threads)
             thread.start();
@@ -37,13 +37,13 @@ public abstract class AbstractThreadPool<T> {
 
     @SuppressWarnings("unchecked")
     public synchronized void stop() {
-        if (!isStarted)
+        if (!started)
             throw new IllegalStateException("threads have not been started");
 
         for (int i = 0; i < threads.length; i++)
             dispatch((T) STOP);
 
-        isStarted = false;
+        started = false;
 
         for (Thread thread : threads) {
             try {
@@ -57,7 +57,7 @@ public abstract class AbstractThreadPool<T> {
     public synchronized void dispatch(T job) {
         if (job == null)
             throw new NullPointerException("job is null");
-        if (!isStarted)
+        if (!started)
             throw new IllegalStateException("this pool has not been started yet");
 
         try {
@@ -68,7 +68,7 @@ public abstract class AbstractThreadPool<T> {
     }
 
     public synchronized boolean isStarted() {
-        return isStarted;
+        return started;
     }
 
     private class WorkerThread extends Thread {
