@@ -1,7 +1,5 @@
 apply plugin: 'application'
 
-sourceCompatibility = 1.6
-
 repositories {
     mavenCentral()
 }
@@ -11,7 +9,7 @@ dependencies {
 }
 
 run {
-    main = "JNASample"
+    main = "JNAMain"
     classpath = sourceSets.main.runtimeClasspath
-    systemProperties = ["jna.library.path": "src/main/resources"]
+    systemProperties = ["jna.library.path": "lib"]
 }

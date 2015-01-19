@@ -2,7 +2,7 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.Platform;
 
-public class JNASample {
+public class JNAMain {
 
     public interface CLibrary extends Library {
         CLibrary clib = (CLibrary) Native.loadLibrary(Platform.isWindows() ? "msvcrt" : "c", CLibrary.class);
