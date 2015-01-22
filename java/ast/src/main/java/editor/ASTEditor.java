@@ -15,7 +15,7 @@ import org.eclipse.text.edits.TextEdit;
 
 public class ASTEditor {
 
-    public static String edit(String sourceCode, ASTVisitor... visitors)
+    public String edit(String sourceCode, ASTVisitor... visitors)
             throws MalformedTreeException, BadLocationException {
         Document doc = new Document(sourceCode);
         ASTParser parser = ASTParser.newParser(AST.JLS4);
@@ -32,20 +32,20 @@ public class ASTEditor {
         return doc.get();
     }
 
-    public static String format(String sourceCode) {
+    public String format(String sourceCode) {
         return sourceCode.replaceAll("\t", "    ");
     }
 
     public static void main(String[] args) throws Exception {
-        File file = new File("res/Hoge.java");
-        String sourceCode = FileUtils.readFileToString(file);
-        String modifiedSourceCode = ASTEditor.edit(sourceCode,
+        ASTEditor editor = new ASTEditor();
+        String sourceCode = FileUtils.readFileToString(new File("res/Hoge.java"));
+        String modifiedSourceCode = editor.edit(sourceCode,
                 new MethodAddVisitor(), new MethodDeleteVisitor());
 
         System.out.println("##### Before #####");
         System.out.println(sourceCode);
         System.out.println("##### After #####");
-        System.out.println(ASTEditor.format(modifiedSourceCode));
+        System.out.println(editor.format(modifiedSourceCode));
     }
 
 }
