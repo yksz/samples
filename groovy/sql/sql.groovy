@@ -1,4 +1,5 @@
-@Grab(group='com.h2database', module='h2', version='1.3.+')
+@GrabConfig(systemClassLoader=true)
+@Grab(group='com.h2database', module='h2', version='1.4.+')
 import groovy.sql.Sql
 
 def config = 'h2.properties'
