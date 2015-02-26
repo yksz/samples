@@ -9,12 +9,7 @@ INSERT INTO product (name, price) VALUES ('apple', 50);
 INSERT INTO product (name, price) VALUES ('orange', 100);
 INSERT INTO product (name, price) VALUES ('coffee', 150);
 
-SELECT
-    id,
-    name,
-    price
-FROM
-    product;
+SELECT * FROM product;
 
 -- main
 CREATE VIEW price100
