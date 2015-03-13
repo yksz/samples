@@ -1,0 +1,33 @@
+apply plugin: 'war'
+
+version = '1.0.0'
+
+ext {
+    wabName = 'glassfish-app'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+}
+
+war {
+    archiveName = "${wabName}.war"
+    manifest {
+        def importPackages = [
+            'javax.servlet;version="3.0"',
+            'javax.servlet.http;version="3.0"'
+        ]
+        attributes 'Manifest-Version': '1.0'
+        attributes 'Bundle-ManifestVersion': '2'
+        attributes 'Bundle-Name': 'GlassFish Web Application Bundle'
+        attributes 'Bundle-SymbolicName': wabName
+        attributes 'Bundle-Version': version
+        attributes 'Bundle-ClassPath': 'WEB-INF/classes'
+        attributes 'Web-ContextPath': "/${wabName}"
+        attributes 'Import-Package': importPackages.join(',')
+    }
+}
