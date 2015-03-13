@@ -1,13 +1,12 @@
-apply plugin: 'groovy'
 apply plugin: 'war'
 apply plugin: 'jetty'
 
-repositories {
-    mavenCentral()
-}
-
 ext {
     warName = 'executable.war'
+}
+
+repositories {
+    mavenCentral()
 }
 
 configurations {
@@ -15,8 +14,6 @@ configurations {
 }
 
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.2.2'
-
     providedCompile 'org.eclipse.jetty.aggregate:jetty-webapp:8.1.15.v20140411'
     executable 'org.eclipse.jetty.aggregate:jetty-webapp:8.1.15.v20140411'
 }
