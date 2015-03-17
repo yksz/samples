@@ -5,6 +5,7 @@ def console = actor {
         react { message ->
             switch (message) {
                 case "stop":
+                    reply "bye"
                     stop()
                     break
                 default:
@@ -16,5 +17,6 @@ def console = actor {
 
 console.send "msg1"
 console << "msg2"
-console "stop"
+console "msg3"
+println console.sendAndWait("stop")
 console.join()
