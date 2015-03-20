@@ -1,4 +1,3 @@
-(use slib)
 (require 'trace)
 
 (define (fib n)
