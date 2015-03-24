@@ -13,10 +13,11 @@
     (close-output-port oport)))
 
 
-(when (<= (length (command-line)) 2)
-  (display "usage: copy <src> <dst>")
-  (newline)
-  (exit 1))
-(let ((src (list-ref (command-line) 1))
-      (dst (list-ref (command-line) 2)))
-  (file-copy src dst))
+(let ((args (command-line)))
+  (when (<= (length args) 2)
+    (display "usage: copy <src> <dst>")
+    (newline)
+    (exit 1))
+  (let ((src (list-ref args 1))
+        (dst (list-ref args 2)))
+    (file-copy src dst)))
