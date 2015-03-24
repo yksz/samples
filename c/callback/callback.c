@@ -9,7 +9,7 @@ static void init()
 
 static int get_rand(int min, int max)
 {
-    return min + (int) (rand()*(max-min+1.0)/(1.0+RAND_MAX));
+    return min + (int) (rand() * (max - min + 1.0) / (1.0 + RAND_MAX));
 }
 
 static void add(int* num, void (*succeeded)(int* val), void (*failed)())
@@ -36,8 +36,8 @@ int main()
 {
     init();
     int num = 0;
-    for (int i = 0; i < 9; i++) {
-        printf("%d loop: ", i+1);
+    for (int i = 1; i < 10; i++) {
+        printf("%d loop: ", i);
         add(&num, succeeded, failed);
     }
     return 0;
