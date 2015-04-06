@@ -10,11 +10,15 @@ def cleanTasks = subprojects.collect { project ->
     "${project.name}:clean"
 }
 
-task clean(dependsOn: cleanTasks) {
-    delete "$buildDir"
+task clean(dependsOn: cleanTasks) << {
+    delete buildDir
 }
 
-task release(dependsOn: [':dependency.runtime:fatJar', ':dependency.main:jar']) {
+def jarTasks = subprojects.collect { project ->
+    "${project.name}:jar"
+}
+
+task release(dependsOn: [clean, jarTasks]) << {
     def distsDirName = "$buildDir/distributions"
     def dst = mkdir(distsDirName)
     def srcs = subprojects.collect { project ->
@@ -26,7 +30,7 @@ task release(dependsOn: [':dependency.runtime:fatJar', ':dependency.main:jar']) 
     }
 }
 
-task deploy(dependsOn: release) {
+task deploy(dependsOn: release) << {
     def felixHome = System.getenv(felixEnv)
     if (felixHome == null)
         throw new StopActionException("'$felixEnv' is not found")

@@ -23,7 +23,7 @@ jar {
     }
 }
 
-task deploy(dependsOn: jar) {
+task deploy(dependsOn: jar) << {
     def felixHome = System.getenv(felixEnv)
     if (felixHome == null)
         throw new StopActionException("'$felixEnv' is not found")

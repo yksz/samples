@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ -z "$FELIX_HOME" ]; then
+if [ -z "$FELIX_HOME" ] ; then
     echo "'FELIX_HOME' is not found"
     exit 1
 fi
