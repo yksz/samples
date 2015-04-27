@@ -1,0 +1,21 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.incremental = true
+}
+
+run {
+    enableAssertions = true
+
+    if (project.hasProperty('main'))
+        main = project.main
+    if (project.hasProperty('args'))
+        args = project.args.tokenize()
+}
+
+task usage() << {
+    println 'gradle run -Pmain="<main class>" -Pargs="<args>"'
+}
