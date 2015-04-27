@@ -11,8 +11,8 @@ import java.util.function.BiConsumer;
 
 public class StreamCopy {
     public static void copy(InputStream in, OutputStream out) throws IOException {
-        BufferedInputStream bin = new BufferedInputStream(in);
-        BufferedOutputStream bout = new BufferedOutputStream(out);
+        InputStream bin = new BufferedInputStream(in);
+        OutputStream bout = new BufferedOutputStream(out);
         try {
             byte[] buf = new byte[8192];
             int len = 0;
@@ -34,8 +34,8 @@ public class StreamCopy {
     }
 
     public static void copyByTryWithResources(InputStream in, OutputStream out) throws IOException {
-        try (BufferedInputStream bin = new BufferedInputStream(in);
-                BufferedOutputStream bout = new BufferedOutputStream(out)) {
+        try (InputStream bin = new BufferedInputStream(in);
+                OutputStream bout = new BufferedOutputStream(out)) {
             byte[] buf = new byte[8192];
             int len;
             while ((len = bin.read(buf)) != -1)
@@ -46,8 +46,8 @@ public class StreamCopy {
 
     private static void testCopy(BiConsumer<InputStream, OutputStream> func) {
         String str = "foobar";
-        ByteArrayInputStream in = new ByteArrayInputStream(str.getBytes());
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        InputStream in = new ByteArrayInputStream(str.getBytes());
+        OutputStream out = new ByteArrayOutputStream();
         func.accept(in, out);
         assert str.equals(out.toString());
     }
