@@ -12,7 +12,7 @@ static void copy(FILE* src, FILE* dst)
 int main(int argc, char* argv[])
 {
     if (argc <= 2) {
-        fprintf(stderr, "usage: ./a.out <src> <dst>\n");
+        fprintf(stderr, "usage: %s <src> <dst>\n", argv[0]);
         exit(EXIT_FAILURE);
     }
     char* src_name = argv[1];
