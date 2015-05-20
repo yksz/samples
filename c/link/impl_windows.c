@@ -3,5 +3,5 @@
 
 void func(void)
 {
-    printf("impl_win\n");
+    printf("impl_windows\n");
 }

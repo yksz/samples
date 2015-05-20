@@ -8,7 +8,7 @@ all: unix
 unix: main.o impl_unix.o
 	$(CC) -o a.out $(LDFLAGS) $^
 
-win: main.o impl_win.o
+windows: main.o impl_windows.o
 	$(CC) -o a.out $(LDFLAGS) $^
 
 .c.o: $<
