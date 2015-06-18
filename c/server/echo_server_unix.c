@@ -22,7 +22,6 @@ static void echo(int clientfd)
         perror("read");
         exit(1);
     }
-    close(clientfd);
 }
 
 static void accept_client(int serverfd)
@@ -38,14 +37,22 @@ static void accept_client(int serverfd)
     printf("%s connected\n", inet_ntoa(client_addr.sin_addr));
 
     echo(clientfd);
+
+    shutdown(clientfd, SHUT_RDWR);
     close(clientfd);
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char** argv)
 {
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1) {
         perror("socket");
+        exit(1);
+    }
+
+    int soval = 1;
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &soval, sizeof(soval)) == -1) {
+        perror("setsockopt");
         exit(1);
     }
 
