@@ -5,5 +5,5 @@ if not exist build (
 )
 cd build
 
-cmake -DWIN=ON -G "Visual Studio 12" ..
+cmake -G "Visual Studio 11" ..
 pause
