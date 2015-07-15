@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include "interface.h"
+#include <stdio.h>
 
 void func(void)
 {

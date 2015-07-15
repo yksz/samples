@@ -1,7 +1,7 @@
+#include "object.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "object.h"
 
 void Object_delete(Object* self);
 static void Object_privateMethod(Object* self);

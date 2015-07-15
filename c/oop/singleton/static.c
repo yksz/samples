@@ -1,6 +1,6 @@
+#include "object.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "object.h"
 
 static Object instance = { .name = "static" };
 
