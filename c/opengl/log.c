@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <time.h>
 
-static LogLevel loglevel = LOG_INFO;
+static LogLevel loglevel = LogLevel_Info;
 
 void writeLog(LogLevel level, FILE* fp, const char* file, int line, const char* func, const char* fmt, ...)
 {
@@ -16,16 +16,16 @@ void writeLog(LogLevel level, FILE* fp, const char* file, int line, const char* 
     strftime(time, sizeof(time), "%Y/%m/%d %H:%M:%S", localtime(&timer));
 
     switch (level) {
-        case LOG_DEBUG:
+        case LogLevel_Debug:
             fprintf(fp, "%s DEBUG %s:%d:%s: ", time, file, line, func);
             break;
-        case LOG_INFO:
+        case LogLevel_Info:
             fprintf(fp, "%s INFO  %s:%d:%s: ", time, file, line, func);
             break;
-        case LOG_WARN:
+        case LogLevel_Warn:
             fprintf(fp, "%s WARN  %s:%d:%s: ", time, file, line, func);
             break;
-        case LOG_ERROR:
+        case LogLevel_Error:
             fprintf(fp, "%s ERROR %s:%d:%s: ", time, file, line, func);
             break;
     }

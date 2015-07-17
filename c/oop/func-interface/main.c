@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "interface.h"
 
-#define len(x) (sizeof(x)/sizeof(x[0]))
+#define LEN(x) (sizeof(x) / sizeof(x[0]))
 
 void assignment()
 {
@@ -31,7 +31,7 @@ void array()
     int a = 10, b = 5;
     int ans;
 
-    for (int i = 0; i < len(calc); i++) {
+    for (int i = 0; i < LEN(calc); i++) {
         ans = (calc[i])(a, b);
         printf("%d %c %d = %d\n", a, op[i], b, ans);
     }
