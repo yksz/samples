@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include "test.h"
+#include <stdio.h>
 
 void println(const char* str) {
     printf("%s\n", str);
