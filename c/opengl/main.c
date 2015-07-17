@@ -84,7 +84,7 @@ static void setMaterial(Material* m)
     glMaterialfv(GL_FRONT, GL_SHININESS, m->shininess);
 }
 
-static void confView(int width, int height)
+static void configureView(int width, int height, bool isPerspectiveEnabled)
 {
     glViewport(0, 0, width, height); // ビューポートの設定
 
@@ -92,12 +92,15 @@ static void confView(int width, int height)
     glLoadIdentity(); // 変換行列を単位行列に初期化する
     double near = 1.0;    // 前方クリップ面と視点間の距離
     double far  = 1000.0; // 後方クリップ面と視点間の距離
-    // 透視投影
-    gluPerspective(60.0, // x-z平面の視野角
-                   (double) width / (double) height, // 視野角の縦横比
-                   near, far);
-    // 正射影
-    //glOrtho(-0.2*width, 0.2*width, -0.2*height, 0.2*height, near, far);
+    if (isPerspectiveEnabled) {
+        // 透視投影
+        gluPerspective(60.0, // x-z平面の視野角
+                       (double) width / (double) height, // 視野角の縦横比
+                       near, far);
+    } else {
+        // 正射影
+        glOrtho(-0.2 * width, 0.2 * width, -0.2 * height, 0.2 * height, near, far);
+    }
 }
 
 static void rotate(Viewpoint* v, double theta, double phi)
@@ -105,10 +108,10 @@ static void rotate(Viewpoint* v, double theta, double phi)
     double x = v->ex - v->cx;
     double y = v->ey - v->cy;
     double z = v->ez - v->cz;
-    double d = sqrt(x*x + y*y + z*z);
+    double d = sqrt(x * x + y * y + z * z);
     theta += atan2(x, z);
     phi   += asin(y / d);
-    phi = MAX(MIN(phi, M_PI*0.5), -M_PI*0.5); // -PI/2 <= phi <= +PI/2
+    phi = MAX(MIN(phi, M_PI * 0.5), -M_PI * 0.5); // -PI/2 <= phi <= +PI/2
     v->ex = d * sin(theta) * cos(phi) + v->cx;
     v->ey = d * sin(phi)              + v->cy;
     v->ez = d * cos(theta) * cos(phi) + v->cz;
@@ -170,7 +173,7 @@ static void reshape(int width, int height)
 {
     debugLog("width=%4d, height=%4d\n", width, height);
 
-    confView(width, height);
+    configureView(width, height, true);
 }
 
 static void keyboard(unsigned char key, int x, int y)
@@ -240,15 +243,15 @@ static void init(void)
     glEnable(GL_DEPTH_TEST); // 隠面消去を有効にする
     glEnable(GL_CULL_FACE); // カリングを有効にする
     glCullFace(GL_FRONT); // 裏面のみを描画する
-    //glShadeModel(GL_FLAT); // フラットシェーディングを適用する
+//    glShadeModel(GL_FLAT); // フラットシェーディングを適用する
     glEnable(GL_LIGHTING); // 光源を有効にする
     glEnable(GL_LIGHT0); // ライト0を有効にする
-
-    //setLogLevel(LOG_DEBUG);
 }
 
 int main(int argc, char** argv)
 {
+    setLogLevel(LOG_DEBUG);
+
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
     glutInitWindowPosition(100, 100);
