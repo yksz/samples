@@ -1,8 +1,10 @@
 #include <iostream>
 #include "newmath.h"
 
+#define LEN(array) (sizeof(array) / sizeof(array[0]))
+
 int main(void) {
-    std::cout << "add(1, 2) = " << add(1, 2) << std::endl;
-    std::cout << "sub(1, 2) = " << sub(1, 2) << std::endl;
+    int array[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    std::cout << "sum 1-9 = " << sum(array, LEN(array)) << std::endl;
     return 0;
 }

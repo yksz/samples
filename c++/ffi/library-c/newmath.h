@@ -5,8 +5,7 @@
 extern "C" {
 # endif /* __cplusplus */
 
-int add(int x, int y);
-int sub(int x, int y);
+int sum(int* array, int len);
 
 #ifdef __cplusplus
 } /* extern "C" */

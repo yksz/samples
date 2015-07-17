@@ -1,9 +1,9 @@
 #include "newmath.h"
 
-int add(int x, int y) {
-    return x + y;
-}
-
-int sub(int x, int y) {
-    return x - y;
+int sum(int* array, int len) {
+    int sum = 0;
+    for (int i = 0; i < len; i++) {
+        sum += array[i];
+    }
+    return sum;
 }
