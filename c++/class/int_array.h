@@ -1,10 +1,6 @@
 #ifndef INT_ARRAY_H
 #define INT_ARRAY_H
 
-#define DISALLOW_COPY_AND_ASSIGN(TypeName) \
-    TypeName(const TypeName&);               \
-    void operator=(const TypeName&)
-
 class IntArray {
 public:
     IntArray();
@@ -15,11 +11,13 @@ public:
     void set(int index, int element);
 
 private:
+    IntArray(const IntArray&);
+    void operator=(const IntArray&);
+
     void init(int size);
 
     int* m_array;
     int m_size;
-    DISALLOW_COPY_AND_ASSIGN(IntArray);
 };
 
 #endif // INT_ARRAY_H

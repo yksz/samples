@@ -1,12 +1,14 @@
 #include "int_array.h"
-#include <cstdlib>
-#include <cstdio>
+#include <sstream>
+#include <stdexcept>
 
 namespace {
 
 void checkIndex(int index, int size) {
     if (index < 0 || index >= size) {
-        exit(EXIT_FAILURE);
+        std::stringstream msg;
+        msg << "checkIndex: index=" << index << ", size=" << size;
+        throw std::out_of_range(msg.str());
     }
 }
 
