@@ -7,7 +7,7 @@ public:
     explicit IntArray(int size);
     ~IntArray();
 
-    int get(int index);
+    int get(int index) const;
     void set(int index, int element);
 
 private:

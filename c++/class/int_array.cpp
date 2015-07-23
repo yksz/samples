@@ -31,7 +31,7 @@ IntArray::~IntArray() {
     delete[] m_array;
 }
 
-int IntArray::get(int index) {
+int IntArray::get(int index) const {
     checkIndex(index, m_size);
     return m_array[index];
 }
