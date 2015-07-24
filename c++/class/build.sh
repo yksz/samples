@@ -1,3 +1,3 @@
 #!/bin/sh
 
-g++ -Wall int_array.cpp main.cpp
+g++ -Wall point.cpp point_int.cpp main.cpp

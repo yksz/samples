@@ -1,14 +1,17 @@
 #include <cstdio>
-#include "int_array.h"
+#include "point.h"
+#include "point_int.h"
 
 int main(void) {
-    int size = 10;
-    IntArray array(size);
-    for (int i = 0; i < size; i++) {
-        array.set(i, i + 1);
-    }
-    for (int i = 0; i < size; i++) {
-        printf("index %d: %d\n", i, array.get(i));
-    }
+    PointInt* p1 = new PointInt(1, 2);
+    p1->setLocation(3, 4);
+    printf("p1(x, y)=(%f, %f)\n", p1->getX(), p1->getY());
+    delete p1;
+
+    Point p2 = Point(5, 6);
+    Point p3 = Point(p2);
+    p3.move(7, 8);
+    printf("p2(x, y)=(%f, %f)\n", p2.getX(), p2.getY());
+    printf("p3(x, y)=(%f, %f)\n", p3.getX(), p3.getY());
     return 0;
 }
