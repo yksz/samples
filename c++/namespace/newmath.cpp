@@ -15,4 +15,4 @@ double average(int* array, int len) {
     return (double) val / len;
 }
 
-}
+} // namespace myproject
