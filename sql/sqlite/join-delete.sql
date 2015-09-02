@@ -43,5 +43,5 @@ SELECT
     d.name
 FROM
     employee e INNER JOIN department d
-WHERE
+ON
     e.department_id = d.id;
