@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 2.8.4)
+project(recv C)
+
+if(WIN32)
+    set(SOURCE_FILES ${SOURCE_FILES} src/recv_windows.c)
+else()
+    set(SOURCE_FILES ${SOURCE_FILES} src/recv_unix.c)
+    add_definitions(-Wall -std=c99)
+endif()
+add_executable(recv ${SOURCE_FILES})
