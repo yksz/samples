@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <GLUT/glut.h>
-#include "log.h"
+#include "logger.h"
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
@@ -171,14 +171,14 @@ static void idle(void)
 
 static void reshape(int width, int height)
 {
-    LOG_DEBUG("width=%4d, height=%4d\n", width, height);
+    LOGGER_DEBUG("width=%4d, height=%4d\n", width, height);
 
     configureView(width, height, true);
 }
 
 static void keyboard(unsigned char key, int x, int y)
 {
-    LOG_DEBUG("key=%c, x=%4d, y=%4d\n", key, x, y);
+    LOGGER_DEBUG("key=%c, x=%4d, y=%4d\n", key, x, y);
 
     switch (key) {
         case 0x1b: // Esc
@@ -194,7 +194,7 @@ static void keyboard(unsigned char key, int x, int y)
 // click
 static void mouse(int button, int state, int x, int y)
 {
-    LOG_DEBUG("button=%d, state=%d, x=%d, y=%d\n", button, state, x, y);
+    LOGGER_DEBUG("button=%d, state=%d, x=%d, y=%d\n", button, state, x, y);
 
     if (state == GLUT_DOWN) {
         switch (button) {
@@ -218,7 +218,7 @@ static void mouse(int button, int state, int x, int y)
 // drag
 static void motion(int x, int y)
 {
-    LOG_DEBUG("x=%d, y=%d\n", x, y);
+    LOGGER_DEBUG("x=%d, y=%d\n", x, y);
 
     double rotateRate = 0.5;
     double zoomRate = 0.01;
@@ -250,7 +250,7 @@ static void init(void)
 
 int main(int argc, char** argv)
 {
-    setLogLevel(LogLevel_Debug);
+    setLevel(LogLevel_DEBUG);
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);

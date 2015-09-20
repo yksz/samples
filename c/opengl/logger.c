@@ -1,14 +1,15 @@
-#include "log.h"
+#include "logger.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <time.h>
 
-static LogLevel loglevel = LogLevel_Info;
+static LogLevel logLevel = LogLevel_INFO;
 
-void writeLog(LogLevel level, FILE* fp, const char* file, int line, const char* func, const char* fmt, ...)
+void logger_write(LogLevel level, FILE* fp, const char* file, int line, const char* func, const char* fmt, ...)
 {
-    if (loglevel > level)
+    if (logLevel > level) {
         return;
+    }
 
     time_t timer = time(NULL);
     char time[20];
@@ -16,16 +17,16 @@ void writeLog(LogLevel level, FILE* fp, const char* file, int line, const char* 
     strftime(time, sizeof(time), "%Y/%m/%d %H:%M:%S", localtime(&timer));
 
     switch (level) {
-        case LogLevel_Debug:
+        case LogLevel_DEBUG:
             fprintf(fp, "%s DEBUG %s:%d:%s: ", time, file, line, func);
             break;
-        case LogLevel_Info:
+        case LogLevel_INFO:
             fprintf(fp, "%s INFO  %s:%d:%s: ", time, file, line, func);
             break;
-        case LogLevel_Warn:
+        case LogLevel_WARN:
             fprintf(fp, "%s WARN  %s:%d:%s: ", time, file, line, func);
             break;
-        case LogLevel_Error:
+        case LogLevel_ERROR:
             fprintf(fp, "%s ERROR %s:%d:%s: ", time, file, line, func);
             break;
     }
@@ -36,7 +37,7 @@ void writeLog(LogLevel level, FILE* fp, const char* file, int line, const char* 
     va_end(list);
 }
 
-void setLogLevel(LogLevel level)
+void setLevel(LogLevel level)
 {
-    loglevel = level;
+    logLevel = level;
 }
