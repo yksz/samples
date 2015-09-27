@@ -5,26 +5,21 @@
 
 static const int DEFAULT_PORT = 8080;
 
-static void wait_and_recv(SOCKET sock)
+static void recvUDP(SOCKET sock)
 {
-    char buf[64];
-    for (;;) {
-        memset(buf, 0, sizeof(buf));
-        recvfrom(sock, buf, sizeof(buf), 0, NULL, NULL);
-        printf("%s\n", buf);
+    char buf[64] = {0};
+    if ((recvfrom(sock, buf, sizeof(buf), 0, NULL, NULL)) == -1) {
+        fprintf(stderr, "ERROR: recvfrom: %d\n", WSAGetLastError());
+        exit(1);
     }
+    printf("%s\n", buf);
 }
 
-int main(int argc, char** argv)
+static void startReceiver(int port)
 {
-    int port = DEFAULT_PORT;
     WSADATA data;
     SOCKET sock;
     struct sockaddr_in recv_addr;
-
-    if (argc > 1) {
-        port = atoi(argv[1]);
-    }
 
     if (WSAStartup(MAKEWORD(2, 0), &data) != 0) {
         fprintf(stderr, "ERROR: WSAStartup: %d\n", WSAGetLastError());
@@ -47,9 +42,21 @@ int main(int argc, char** argv)
     }
 
     printf("Listening on port %d\n", port);
-    wait_and_recv(sock);
+    for (;;) {
+        recvUDP(sock);
+    }
 
     closesocket(sock);
     WSACleanup();
+}
+
+int main(int argc, char** argv)
+{
+    int port = DEFAULT_PORT;
+    if (argc > 1) {
+        int num = atoi(argv[1]);
+        port = num ? num : port;
+    }
+    startReceiver(port);
     return 0;
 }

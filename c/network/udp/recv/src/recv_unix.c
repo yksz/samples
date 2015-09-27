@@ -8,23 +8,18 @@
 
 static const int DEFAULT_PORT = 8080;
 
-static void wait_and_recv(int sockfd)
+static void recvUDP(int sockfd)
 {
-    char buf[64];
-    for (;;) {
-        memset(buf, 0, sizeof(buf));
-        recvfrom(sockfd, buf, sizeof(buf), 0, NULL, NULL);
-        printf("%s\n", buf);
+    char buf[64] = {0};
+    if ((recvfrom(sockfd, buf, sizeof(buf), 0, NULL, NULL)) == -1) {
+        perror("recvfrom");
+        exit(1);
     }
+    printf("%s\n", buf);
 }
 
-int main(int argc, char** argv)
+static void startReceiver(int port)
 {
-    int port = DEFAULT_PORT;
-    if (argc > 1) {
-        port = atoi(argv[1]);
-    }
-
     int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sockfd == -1) {
         perror("socket");
@@ -42,8 +37,20 @@ int main(int argc, char** argv)
     }
 
     printf("Listening on port %d\n", port);
-    wait_and_recv(sockfd);
+    for (;;) {
+        recvUDP(sockfd);
+    }
 
     close(sockfd);
+}
+
+int main(int argc, char** argv)
+{
+    int port = DEFAULT_PORT;
+    if (argc > 1) {
+        int num = atoi(argv[1]);
+        port = num ? num : port;
+    }
+    startReceiver(port);
     return 0;
 }
