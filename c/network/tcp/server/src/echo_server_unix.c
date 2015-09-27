@@ -5,12 +5,11 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-static const int PORT = 8080;
-static const int QUEUE_SIZE = 5;
+static const int DEFAULT_PORT = 8080;
 
 static void echo(int clientfd)
 {
-    char buf[1024];
+    char buf[256];
     int len;
     while ((len = read(clientfd, buf, sizeof(buf))) > 0) {
         if (write(clientfd, buf, len) == -1) {
@@ -24,7 +23,7 @@ static void echo(int clientfd)
     }
 }
 
-static void accept_client(int serverfd)
+static void acceptClient(int serverfd)
 {
     struct sockaddr_in client_addr;
     socklen_t len = sizeof(client_addr);
@@ -42,7 +41,7 @@ static void accept_client(int serverfd)
     close(clientfd);
 }
 
-int main(int argc, char** argv)
+static void startServer(int port)
 {
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1) {
@@ -59,23 +58,33 @@ int main(int argc, char** argv)
     struct sockaddr_in server_addr;
     memset(&server_addr, 0, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(PORT);
+    server_addr.sin_port = htons(port);
     server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
     if (bind(sockfd, (struct sockaddr*) &server_addr, sizeof(server_addr)) == -1) {
         perror("bind");
         exit(1);
     }
 
-    if (listen(sockfd, QUEUE_SIZE)) {
+    if (listen(sockfd, SOMAXCONN)) {
         perror("listen");
         exit(1);
     }
-    printf("Listening on port %d\n", PORT);
+    printf("Listening on port %d\n", port);
 
     for (;;) {
-        accept_client(sockfd);
+        acceptClient(sockfd);
     }
 
     close(sockfd);
+}
+
+int main(int argc, char** argv)
+{
+    int port = DEFAULT_PORT;
+    if (argc > 1) {
+        int num = atoi(argv[1]);
+        port = num ? num : port;
+    }
+    startServer(port);
     return 0;
 }
