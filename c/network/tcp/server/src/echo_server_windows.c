@@ -73,17 +73,17 @@ static void startServer(int port)
     }
 
     if (listen(sock, SOMAXCONN) == SOCKET_ERROR) {
-        printf("ERROR: listen: %d\n", WSAGetLastError());
+        fprintf(stderr, "ERROR: listen: %d\n", WSAGetLastError());
+        exit(1);
     }
-    printf("Listening on port %d\n", port);
 
+    printf("Listening on port %d\n", port);
     for (;;) {
         acceptClient(sock);
     }
 
     closesocket(sock);
     WSACleanup();
-    return 0;
 }
 
 int main(int argc, char** argv)

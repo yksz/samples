@@ -69,8 +69,8 @@ static void startServer(int port)
         perror("listen");
         exit(1);
     }
-    printf("Listening on port %d\n", port);
 
+    printf("Listening on port %d\n", port);
     for (;;) {
         acceptClient(sockfd);
     }
