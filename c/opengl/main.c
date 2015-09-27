@@ -250,7 +250,7 @@ static void init(void)
 
 int main(int argc, char** argv)
 {
-    setLevel(LogLevel_DEBUG);
+    logger_setLevel(LogLevel_DEBUG);
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);

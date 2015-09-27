@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <time.h>
 
-static LogLevel logLevel = LogLevel_INFO;
+static LogLevel current_level = LogLevel_INFO;
 
 void logger_write(LogLevel level, FILE* fp, const char* file, int line, const char* func, const char* fmt, ...)
 {
-    if (logLevel > level) {
+    if (current_level > level) {
         return;
     }
 
@@ -37,7 +37,7 @@ void logger_write(LogLevel level, FILE* fp, const char* file, int line, const ch
     va_end(list);
 }
 
-void setLevel(LogLevel level)
+void logger_setLevel(LogLevel new_level)
 {
-    logLevel = level;
+    current_level = new_level;
 }
