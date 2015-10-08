@@ -14,7 +14,7 @@ $(TARGET): $(OBJS)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 .c.o: $<
-	$(CC) -c $< $(CFLAGS)
+	$(CC) -c $(CFLAGS) $<
 
 clean:
 	rm $(TARGET) $(OBJS)

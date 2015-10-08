@@ -13,7 +13,7 @@ LDFLAGS = $(shell pkg-config --libs glib-2.0)
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) -o $@ $(LDFLAGS) $^
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 .c.o: $<
 	$(CC) -c $(CFLAGS) $<

@@ -2,14 +2,18 @@
 
 case "`uname`" in
     CYGWIN*)
+        echo 'Create newmath.dll'
         gcc -shared -std=c99 -o newmath.dll newmath.c
-        echo 'create newmath.dll'
         ;;
     Darwin*)
-        gcc -shared -o libnewmath.dylib newmath.c
-        echo 'create libnewmath.dylib'
+        echo 'Create libnewmath.dylib'
+        gcc -shared -std=c99 -o libnewmath.dylib newmath.c
+        ;;
+    Linux*)
+        echo 'Create libnewmath.so'
+        gcc -shared -std=c99 -o libnewmath.so newmath.c
         ;;
     *)
-        echo 'failed to create a dynamic library'
+        echo 'Failed to create a dynamic library'
         ;;
 esac

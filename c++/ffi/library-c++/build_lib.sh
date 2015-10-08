@@ -2,14 +2,18 @@
 
 case "`uname`" in
     CYGWIN*)
+        echo 'Create cstack.dll'
         g++ -shared -o cstack.dll cstack.cpp
-        echo 'create cstack.dll'
         ;;
     Darwin*)
+        echo 'Create libcstack.dylib'
         g++ -shared -o libcstack.dylib cstack.cpp
-        echo 'create libcstack.dylib'
+        ;;
+    Linux*)
+        echo 'Create libcstack.so'
+        g++ -shared -fPIC -o libcstack.so cstack.cpp
         ;;
     *)
-        echo 'failed to create a dynamic library'
+        echo 'Failed to create a dynamic library'
         ;;
 esac

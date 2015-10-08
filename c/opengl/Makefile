@@ -11,7 +11,7 @@ LDFLAGS = -framework OpenGL -framework GLUT -framework Foundation
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) -o $@ $(LDFLAGS) $^
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 .c.o: $<
 	$(CC) -c $(CFLAGS) $<
