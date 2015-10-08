@@ -1,4 +1,4 @@
 #!/bin/sh
 
-g++ -c -I. main.cpp
-g++ -o a.out -L. -lnewmath main.o
+g++ -c main.cpp -I.
+g++ -o a.out main.o -L. -lnewmath

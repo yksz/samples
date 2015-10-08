@@ -1,4 +1,4 @@
 #!/bin/sh
 
-gcc -c -I. main.c
-gcc -o a.out -L. -lnewmath main.o
+gcc -c main.c -I.
+gcc -o a.out main.o -L. -lnewmath

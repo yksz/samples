@@ -2,7 +2,7 @@
 
 case "`uname`" in
     CYGWIN*)
-        gcc -shared -o newmath.dll newmath.c
+        gcc -shared -std=c99 -o newmath.dll newmath.c
         echo 'create newmath.dll'
         ;;
     Darwin*)
