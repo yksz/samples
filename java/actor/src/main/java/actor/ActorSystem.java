@@ -30,7 +30,7 @@ public class ActorSystem {
         pool.awaitTermination(10, TimeUnit.SECONDS);
     }
 
-    static ForkJoinPool getPool() {
-        return pool;
+    static synchronized void dispatch(Runnable task) {
+        pool.submit(task);
     }
 }

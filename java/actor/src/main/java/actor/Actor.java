@@ -8,7 +8,7 @@ public abstract class Actor {
 
     public void tell(Object message) throws InterruptedException {
         mailbox.put(message);
-        ActorSystem.getPool().submit(() -> {
+        ActorSystem.dispatch(() -> {
             try {
                 onReceive(mailbox.take());
             } catch (InterruptedException ignore) {
