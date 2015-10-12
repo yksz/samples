@@ -9,18 +9,23 @@ public class ActorSystem {
     private static final Map<String, Actor> actors = new TreeMap<>();
     private static final ForkJoinPool pool = new ForkJoinPool();
 
-    public static void register(String address, Actor actor) {
+    public static synchronized void assign(String address, Actor actor) {
         actors.put(address, actor);
     }
 
-    public static void send(String address, Object message) throws InterruptedException {
+    public static synchronized void remove(String address) {
+        actors.remove(address);
+    }
+
+    public static synchronized void send(String address, Object message)
+            throws InterruptedException {
         Actor actor = actors.get(address);
         if (actor != null) {
             actor.tell(message);
         }
     }
 
-    public static void shutdown() throws InterruptedException {
+    public static synchronized void shutdown() throws InterruptedException {
         pool.shutdown();
         pool.awaitTermination(10, TimeUnit.SECONDS);
     }

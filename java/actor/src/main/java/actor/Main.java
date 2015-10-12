@@ -2,12 +2,12 @@ package actor;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        ActorSystem.register("/path/actor1", new Actor() {
+        ActorSystem.assign("/path/actor1", new Actor() {
             public void onReceive(Object message) {
                 System.out.println("actor1: " + message);
             }
         });
-        ActorSystem.register("/path/actor2", new Actor() {
+        ActorSystem.assign("/path/actor2", new Actor() {
             public void onReceive(Object message) {
                 try {
                     Thread.sleep(1000);
