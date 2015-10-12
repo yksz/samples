@@ -27,7 +27,7 @@ private:
     void operator=(const Book&);
 };
 
-void readBook(std::shared_ptr<Book> book) {
+void readBook(const std::shared_ptr<Book>& book) {
     std::cout << "Read Book[name=" << book->getName() << "]" << std::endl;
 }
 
