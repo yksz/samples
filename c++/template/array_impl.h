@@ -1,7 +1,4 @@
-#ifndef DETAILS_ARRAY_H
-#define DETAILS_ARRAY_H
-
-#include "../array.h"
+#include "array.h"
 #include <sstream>
 #include <stdexcept>
 
@@ -39,7 +36,7 @@ Array<T>::~Array() {
 }
 
 template<typename T>
-T Array<T>::operator[](int index) const {
+T& Array<T>::operator[](int index) const {
     return get(index);
 }
 
@@ -49,7 +46,7 @@ int Array<T>::size() const {
 }
 
 template<typename T>
-T Array<T>::get(int index) const {
+T& Array<T>::get(int index) const {
     checkIndex(index, m_size);
     return m_array[index];
 }
@@ -59,5 +56,3 @@ void Array<T>::set(int index, const T& element) {
     checkIndex(index, m_size);
     m_array[index] = element;
 }
-
-#endif // DETAILS_ARRAY_H
