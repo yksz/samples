@@ -25,6 +25,13 @@ public class ActorSystem {
         }
     }
 
+    public static synchronized void broadcast(Object message)
+            throws InterruptedException {
+        for (Map.Entry<String, Actor> e : actors.entrySet()) {
+            e.getValue().tell(message);
+        }
+    }
+
     public static synchronized void shutdown() throws InterruptedException {
         pool.shutdown();
         pool.awaitTermination(10, TimeUnit.SECONDS);

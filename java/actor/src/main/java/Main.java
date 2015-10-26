@@ -1,4 +1,5 @@
-package actor;
+import actor.Actor;
+import actor.ActorSystem;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
@@ -17,9 +18,10 @@ public class Main {
             }
         });
         ActorSystem.send("/path/actor1", "foo");
-        ActorSystem.send("/path/actor2", "bar");
-        ActorSystem.send("/path/actor1", "fizz");
+        ActorSystem.send("/path/actor2", "fizz");
+        ActorSystem.send("/path/actor1", "bar");
         ActorSystem.send("/path/actor2", "bazz");
+        ActorSystem.broadcast("!");
         ActorSystem.shutdown();
     }
 }
