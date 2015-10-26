@@ -1,18 +1,9 @@
 package actor;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-
 public abstract class Actor {
-    private final BlockingQueue<Object> mailbox = new LinkedBlockingQueue<>();
-
-    public void tell(Object message) throws InterruptedException {
-        mailbox.put(message);
+    public void tell(final Object message) throws InterruptedException {
         ActorSystem.dispatch(() -> {
-            try {
-                onReceive(mailbox.take());
-            } catch (InterruptedException ignore) {
-            }
+            onReceive(message);
         });
     }
 
