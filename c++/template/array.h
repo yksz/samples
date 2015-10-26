@@ -9,9 +9,9 @@ public:
     ~Array();
     T& operator[](int index) const;
 
-    int size() const;
-    T& get(int index) const;
-    void set(int index, const T& element);
+    int Size() const;
+    T& Get(int index) const;
+    void Set(int index, const T& element);
 
 private:
     Array(const Array&);
@@ -19,8 +19,8 @@ private:
 
     void init(int size);
 
+    const int m_size;
     T* m_array;
-    int m_size;
 };
 
 #include "array_impl.h"

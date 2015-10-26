@@ -3,8 +3,8 @@
 
 namespace myproject {
 
-int sum(int* array, int len);
-double average(int* array, int len);
+int Sum(int* array, int len);
+double Average(int* array, int len);
 
 } // namespace myproject
 

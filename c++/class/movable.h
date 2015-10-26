@@ -3,7 +3,7 @@
 
 class Movable {
 public:
-    virtual void move(double x, double y) = 0;
+    virtual void Move(double x, double y) = 0;
 };
 
 #endif // MOVABLE_H

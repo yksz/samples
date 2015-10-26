@@ -5,6 +5,6 @@
 
 int main(void) {
     int array[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    printf("average 1-9 = %f\n", myproject::average(array, LEN(array)));
+    printf("average 1-9 = %f\n", myproject::Average(array, LEN(array)));
     return 0;
 }

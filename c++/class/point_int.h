@@ -8,7 +8,7 @@ public:
     PointInt(int x, int y);
     virtual ~PointInt();
 
-    void setLocation(int x, int y);
+    void SetLocation(int x, int y);
 };
 
 #endif // POINT_INT_H

@@ -2,7 +2,7 @@
 
 namespace myproject {
 
-int sum(int* array, int len) {
+int Sum(int* array, int len) {
     int sum = 0;
     for (int i = 0; i < len; i++) {
         sum += array[i];
@@ -10,8 +10,8 @@ int sum(int* array, int len) {
     return sum;
 }
 
-double average(int* array, int len) {
-    int val = sum(array, len);
+double Average(int* array, int len) {
+    int val = Sum(array, len);
     return (double) val / len;
 }
 

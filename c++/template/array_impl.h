@@ -15,19 +15,18 @@ void checkIndex(int index, int size) {
 } // unnamed namespace
 
 template<typename T>
-Array<T>::Array() {
-    init(10);
+Array<T>::Array() : m_size(10) {
+    init(m_size);
 }
 
 template<typename T>
-Array<T>::Array(int size) {
+Array<T>::Array(int size) : m_size(size) {
     init(size);
 }
 
 template<typename T>
 void Array<T>::init(int size) {
     m_array = new T[size];
-    m_size = size;
 }
 
 template<typename T>
@@ -37,22 +36,22 @@ Array<T>::~Array() {
 
 template<typename T>
 T& Array<T>::operator[](int index) const {
-    return get(index);
+    return Get(index);
 }
 
 template<typename T>
-int Array<T>::size() const {
+int Array<T>::Size() const {
     return m_size;
 }
 
 template<typename T>
-T& Array<T>::get(int index) const {
+T& Array<T>::Get(int index) const {
     checkIndex(index, m_size);
     return m_array[index];
 }
 
 template<typename T>
-void Array<T>::set(int index, const T& element) {
+void Array<T>::Set(int index, const T& element) {
     checkIndex(index, m_size);
     m_array[index] = element;
 }

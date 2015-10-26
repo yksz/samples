@@ -16,7 +16,7 @@ public:
         std::cout << "Delete Book[name=" << m_name << "]" << std::endl;
     }
 
-    std::string getName() const {
+    std::string GetName() const {
         return m_name;
     }
 
@@ -28,11 +28,11 @@ private:
 };
 
 void readBook(const std::shared_ptr<Book>& book) {
-    std::cout << "Read Book[name=" << book->getName() << "]" << std::endl;
+    std::cout << "Read Book[name=" << book->GetName() << "]" << std::endl;
 }
 
 void readBook(const Book* book) {
-    std::cout << "Read Book[name=" << book->getName() << "]" << std::endl;
+    std::cout << "Read Book[name=" << book->GetName() << "]" << std::endl;
 }
 
 } // unnamed namespace

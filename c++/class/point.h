@@ -10,12 +10,12 @@ public:
     Point(const Point&);
     virtual ~Point();
 
-    double getX() const;
-    double getY() const;
-    void setLocation(double x, double y);
+    double GetX() const;
+    double GetY() const;
+    void SetLocation(double x, double y);
 
     // Movable
-    void move(double x, double y);
+    void Move(double x, double y);
 
 protected:
     double m_x;
