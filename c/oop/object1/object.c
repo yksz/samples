@@ -5,7 +5,7 @@
 
 static void Object_privateMethod(Object* self);
 
-Object* Object_new(char* name)
+Object* Object_new(const char* name)
 {
     assert(name != NULL);
 

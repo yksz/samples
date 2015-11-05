@@ -12,10 +12,10 @@ typedef struct object Object;
 struct object
 {
     Interface interface;
-    char* name;
+    const char* name;
 };
 
-Object* Object_new(char* name);
+Object* Object_new(const char* name);
 void Object_print(Object* self);
 
 #endif /* OBJECT_H */
