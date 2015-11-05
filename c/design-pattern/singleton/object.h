@@ -4,7 +4,7 @@
 typedef struct object Object;
 struct object
 {
-    char* name;
+    const char* name;
 };
 
 void Static_print();

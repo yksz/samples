@@ -5,7 +5,7 @@
 
 static Object* instance = NULL;
 
-static Object* Object_new(char* name)
+static Object* Object_new(const char* name)
 {
     assert(name != NULL);
 
