@@ -2,9 +2,9 @@
 
 int main()
 {
-#ifdef _WIN32
+#if defined(_WIN32) || defined(_WIN64)
     printf("Windows(32-bit or 64-bit)\n");
-#elif __APPLE__ && __MACH__
+#elif defined(__APPLE__) && defined(__MACH__)
     printf("Mac OS X\n");
 #elif __linux
     printf("Linux\n");
@@ -13,4 +13,5 @@ int main()
 #else
     printf("Unknown OS\n");
 #endif
+    return 0;
 }
