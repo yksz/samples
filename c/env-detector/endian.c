@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 
 static bool isSystemLittleEndian(void)
@@ -10,8 +11,8 @@ static bool isSystemLittleEndian(void)
     printf("defined __BIG_ENDIAN__\n");
     return false;
 #else
-    int i = 1;
-    return *(char*)&i == 1;
+    int32_t i = 1;
+    return *(int8_t*)&i == 1;
 #endif
 }
 
