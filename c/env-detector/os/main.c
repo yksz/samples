@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main()
+int main(void)
 {
 #if defined(_WIN32) || defined(_WIN64)
     printf("Windows(32-bit or 64-bit)\n");
