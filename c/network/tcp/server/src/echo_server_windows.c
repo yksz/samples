@@ -5,13 +5,13 @@
 
 static const int kDefaultPort = 8080;
 
-static void echo(SOCKET client_sock)
+static void echo(SOCKET clientsock)
 {
     char buf[256];
     int len;
 
-    while ((len = recv(client_sock, buf, sizeof(buf), 0)) > 0) {
-        if (send(client_sock, buf, len, 0) == -1) {
+    while ((len = recv(clientsock, buf, sizeof(buf), 0)) > 0) {
+        if (send(clientsock, buf, len, 0) == -1) {
             fprintf(stderr, "ERROR: send: %d\n", WSAGetLastError());
             return;
         }
@@ -26,19 +26,19 @@ static void acceptClient(SOCKET server_sock)
 {
     struct sockaddr_in client_addr;
     int len;
-    SOCKET client_sock;
+    SOCKET clientsock;
 
     len = sizeof(client_addr);
-    client_sock = accept(server_sock, (struct sockaddr*) &client_addr, &len);
-    if (client_sock == INVALID_SOCKET) {
+    clientsock = accept(server_sock, (struct sockaddr*) &client_addr, &len);
+    if (clientsock == INVALID_SOCKET) {
         fprintf(stderr, "ERROR: socket: %d\n", WSAGetLastError());
         exit(1);
     }
     printf("%s connected\n", inet_ntoa(client_addr.sin_addr));
 
-    echo(client_sock);
+    echo(clientsock);
 
-    closesocket(client_sock);
+    closesocket(clientsock);
 }
 
 static void startServer(int port)

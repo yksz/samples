@@ -3,7 +3,7 @@
 
 #pragma comment(lib, "ws2_32.lib")
 
-static const int DEFAULT_PORT = 8080;
+static const int kDefaultPort = 8080;
 
 static void recvUDP(SOCKET sock)
 {
@@ -52,7 +52,7 @@ static void startReceiver(int port)
 
 int main(int argc, char** argv)
 {
-    int port = DEFAULT_PORT;
+    int port = kDefaultPort;
     if (argc > 1) {
         int num = atoi(argv[1]);
         port = num ? num : port;
