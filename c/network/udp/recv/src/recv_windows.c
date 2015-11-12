@@ -10,7 +10,7 @@ static void recvUDP(SOCKET sock)
     char buf[64] = {0};
     if ((recvfrom(sock, buf, sizeof(buf), 0, NULL, NULL)) == -1) {
         fprintf(stderr, "ERROR: recvfrom: %d\n", WSAGetLastError());
-        exit(1);
+        return;
     }
     printf("%s\n", buf);
 }

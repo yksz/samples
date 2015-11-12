@@ -3,8 +3,7 @@
 
 #pragma comment(lib, "ws2_32.lib")
 
-static const int DEFAULT_PORT = 8080;
-static const int QUEUE_SIZE = 5;
+static const int kDefaultPort = 8080;
 
 static void echo(SOCKET client_sock)
 {
@@ -14,12 +13,12 @@ static void echo(SOCKET client_sock)
     while ((len = recv(client_sock, buf, sizeof(buf), 0)) > 0) {
         if (send(client_sock, buf, len, 0) == -1) {
             fprintf(stderr, "ERROR: send: %d\n", WSAGetLastError());
-            exit(1);
+            return;
         }
     }
     if (len == -1) {
         fprintf(stderr, "ERROR: recv: %d\n", WSAGetLastError());
-        exit(1);
+        return;
     }
 }
 
@@ -88,7 +87,7 @@ static void startServer(int port)
 
 int main(int argc, char** argv)
 {
-    int port = DEFAULT_PORT;
+    int port = kDefaultPort;
     if (argc > 1) {
         int num = atoi(argv[1]);
         port = num ? num : port;

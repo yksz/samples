@@ -5,7 +5,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-static const int DEFAULT_PORT = 8080;
+static const int kDefaultPort = 8080;
 
 static void echo(int clientfd)
 {
@@ -14,12 +14,12 @@ static void echo(int clientfd)
     while ((len = read(clientfd, buf, sizeof(buf))) > 0) {
         if (write(clientfd, buf, len) == -1) {
             perror("write");
-            exit(1);
+            return;
         }
     }
     if (len == -1) {
         perror("read");
-        exit(1);
+        return;
     }
 }
 
@@ -80,7 +80,7 @@ static void startServer(int port)
 
 int main(int argc, char** argv)
 {
-    int port = DEFAULT_PORT;
+    int port = kDefaultPort;
     if (argc > 1) {
         int num = atoi(argv[1]);
         port = num ? num : port;

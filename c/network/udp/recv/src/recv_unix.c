@@ -13,7 +13,7 @@ static void recvUDP(int sockfd)
     char buf[64] = {0};
     if ((recvfrom(sockfd, buf, sizeof(buf), 0, NULL, NULL)) == -1) {
         perror("recvfrom");
-        exit(1);
+        return;
     }
     printf("%s\n", buf);
 }

@@ -10,11 +10,11 @@
 static void writeln(int sockfd, char* msg) {
     if (write(sockfd, msg, strlen(msg)) == -1) {
         perror("write");
-        exit(1);
+        return;
     }
     if (write(sockfd, "\n", 1) == -1) {
         perror("write");
-        exit(1);
+        return;
     }
 }
 
