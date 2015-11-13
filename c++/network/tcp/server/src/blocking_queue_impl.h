@@ -1,6 +1,6 @@
 #include "blocking_queue.h"
 
-namespace server {
+namespace tcp {
 
 template<typename T>
 void BlockingQueue<T>::Push(const T& element) {
@@ -53,4 +53,4 @@ bool BlockingQueue<T>::Empty() {
     return m_queue.empty();
 }
 
-} // namespace server
+} // namespace tcp

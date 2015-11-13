@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <functional>
 
-namespace server {
+namespace tcp {
 
 class ThreadPool final {
 public:
@@ -20,6 +20,6 @@ private:
     Impl* pimpl;
 };
 
-} // namespace server
+} // namespace tcp
 
 #endif /* THREAD_POOL_H */

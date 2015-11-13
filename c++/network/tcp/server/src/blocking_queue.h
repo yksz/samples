@@ -6,7 +6,7 @@
 #include <mutex>
 #include <queue>
 
-namespace server {
+namespace tcp {
 
 template<typename T>
 class BlockingQueue final {
@@ -29,7 +29,7 @@ private:
     std::mutex m_mutex;
 };
 
-} // namespace server
+} // namespace tcp
 
 #include "blocking_queue_impl.h"
 

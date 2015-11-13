@@ -5,7 +5,7 @@
 
 #pragma comment(lib, "ws2_32.lib")
 
-namespace server {
+namespace tcp {
 
 WindowsServer::WindowsServer()
         : m_threadPool(new ThreadPool(10)) {
@@ -79,4 +79,4 @@ bool WindowsServer::acceptClient(SOCKET serversock)
     return true;
 }
 
-} // namespace server
+} // namespace tcp

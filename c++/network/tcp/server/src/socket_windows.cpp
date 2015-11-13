@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <winsock2.h>
 
-namespace server {
+namespace tcp {
 
 WindowsSocket::~WindowsSocket() {
     close();
@@ -32,4 +32,4 @@ int WindowsSocket::close(void) {
     return result;
 }
 
-} // namespace server
+} // namespace tcp

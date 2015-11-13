@@ -5,7 +5,7 @@
 #include "server.h"
 #include "thread_pool.h"
 
-namespace server {
+namespace tcp {
 
 class WindowsServer final : public Server {
 public:
@@ -22,6 +22,6 @@ private:
     bool acceptClient(SOCKET serversock);
 };
 
-} // namespace server
+} // namespace tcp
 
 #endif /* SERVER_WINDOWS_H */

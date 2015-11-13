@@ -4,7 +4,7 @@
 #include <winsock2.h>
 #include "socket.h"
 
-namespace server {
+namespace tcp {
 
 class WindowsSocket final : public Socket {
 public:
@@ -21,6 +21,6 @@ private:
     SOCKET m_socket;
 };
 
-} // namespace server
+} // namespace tcp
 
 #endif /* SCOKET_WINDOWS_H */

@@ -3,7 +3,7 @@
 
 #include "socket.h"
 
-namespace server {
+namespace tcp {
 
 class UnixSocket final : public Socket {
 public:
@@ -20,6 +20,6 @@ private:
     int m_fd;
 };
 
-} // namespace server
+} // namespace tcp
 
 #endif /* SCOKET_UNIX_H */

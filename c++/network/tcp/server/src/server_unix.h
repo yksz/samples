@@ -4,7 +4,7 @@
 #include "server.h"
 #include "thread_pool.h"
 
-namespace server {
+namespace tcp {
 
 class UnixServer final : public Server {
 public:
@@ -21,6 +21,6 @@ private:
     bool acceptClient(int serverfd);
 };
 
-} // namespace server
+} // namespace tcp
 
 #endif /* SERVER_UNIX_H */

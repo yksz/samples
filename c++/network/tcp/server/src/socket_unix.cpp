@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <sys/socket.h>
 
-namespace server {
+namespace tcp {
 
 UnixSocket::~UnixSocket() {
     close();
@@ -32,4 +32,4 @@ int UnixSocket::close(void) {
     return result;
 }
 
-} // namespace server
+} // namespace tcp

@@ -7,7 +7,7 @@
 #include <arpa/inet.h>
 #include "socket_unix.h"
 
-namespace server {
+namespace tcp {
 
 UnixServer::UnixServer()
         : m_threadPool(new ThreadPool(10)) {
@@ -73,4 +73,4 @@ bool UnixServer::acceptClient(int serverfd) {
     return true;
 }
 
-} // namespace server
+} // namespace tcp

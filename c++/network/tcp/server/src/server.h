@@ -3,7 +3,7 @@
 
 #include "socket.h"
 
-namespace server {
+namespace tcp {
 
 class Server {
 public:
@@ -17,6 +17,6 @@ protected:
     void (*m_serve)(Socket& client);
 };
 
-} // namespace server
+} // namespace tcp
 
 #endif /* SERVER_H */

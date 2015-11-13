@@ -7,7 +7,7 @@
 
 namespace {
 
-void serve(server::Socket& client) {
+void serve(tcp::Socket& client) {
     char buf[256];
     int len;
     while ((len = client.recv(buf, sizeof(buf))) > 0) {
@@ -18,13 +18,13 @@ void serve(server::Socket& client) {
 } // unnamed namespace
 
 int main(void) {
-    server::Server* server;
+    tcp::Server* server;
 
 #if defined(_WIN32) || defined(_WIN64)
-    server::WindowsServer windowsServer;
+    tcp::WindowsServer windowsServer;
     server = &windowsServer;
 #else
-    server::UnixServer unixServer;
+    tcp::UnixServer unixServer;
     server = &unixServer;
 #endif /* _WIN32 || _WIN64 */
 

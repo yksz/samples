@@ -3,7 +3,7 @@
 #include <vector>
 #include "blocking_queue.h"
 
-namespace server {
+namespace tcp {
 
 class ThreadPool::Impl {
 private:
@@ -54,4 +54,4 @@ void ThreadPool::Dispatch(std::function<void()>&& task) {
     pimpl->Dispatch(std::move(task));
 }
 
-} // namespace server
+} // namespace tcp

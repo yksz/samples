@@ -1,7 +1,7 @@
 #ifndef SOCKET_H
 #define SOCKET_H
 
-namespace server {
+namespace tcp {
 
 class Socket {
 public:
@@ -11,6 +11,6 @@ public:
     virtual int close() = 0;
 };
 
-} // namespace server
+} // namespace tcp
 
 #endif /* SCOKET_H */
