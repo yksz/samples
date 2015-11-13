@@ -13,9 +13,9 @@ public:
     WindowsSocket(const WindowsSocket&) = delete;
     WindowsSocket& operator=(const WindowsSocket&) = delete;
 
-    int recv(char* buf, int len, int flags);
-    int send(const char* buf, int len, int flags);
-    int close(void);
+    int Close(void);
+    int Recv(char* buf, int len, int flags);
+    int Send(const char* buf, int len, int flags);
 
 private:
     SOCKET m_socket;

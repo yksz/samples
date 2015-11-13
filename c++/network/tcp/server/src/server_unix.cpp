@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -66,10 +67,12 @@ bool UnixServer::acceptClient(int serverfd) {
     }
     printf("%s connected\n", inet_ntoa(clientAddr.sin_addr));
 
-    m_threadPool->Dispatch([this, clientfd]() {
-        UnixSocket client(clientfd);
-        m_serve(client);
-    });
+    if (m_serve != NULL) {
+        m_threadPool->Dispatch([this, clientfd]() {
+            UnixSocket client(clientfd);
+            m_serve(client);
+        });
+    }
     return true;
 }
 

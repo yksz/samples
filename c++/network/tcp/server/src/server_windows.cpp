@@ -72,10 +72,12 @@ bool WindowsServer::acceptClient(SOCKET serversock)
     }
     printf("%s connected\n", inet_ntoa(clientAddr.sin_addr));
 
-    m_threadPool->Dispatch([this, clientsock]() {
-        WindowsSocket client(clientsock);
-        m_serve(client);
-    });
+    if (m_serve != NULL) {
+        m_threadPool->Dispatch([this, clientsock]() {
+            WindowsSocket client(clientsock);
+            m_serve(client);
+        });
+    }
     return true;
 }
 

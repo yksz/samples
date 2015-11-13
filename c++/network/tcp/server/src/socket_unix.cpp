@@ -5,29 +5,29 @@
 namespace tcp {
 
 UnixSocket::~UnixSocket() {
-    close();
+    Close();
 }
 
-int UnixSocket::recv(char* buf, int len, int flags) {
-    int result = ::recv(m_fd, buf, len, flags);
+int UnixSocket::Close(void) {
+    int result = shutdown(m_socketfd, SHUT_RDWR);
+    if (result == -1) {
+        perror("shutdown");
+    }
+    return result;
+}
+
+int UnixSocket::Recv(char* buf, int len, int flags) {
+    int result = recv(m_socketfd, buf, len, flags);
     if (result == -1) {
         perror("recv");
     }
     return result;
 }
 
-int UnixSocket::send(const char* buf, int len, int flags) {
-    int result = ::send(m_fd, buf, len, flags);
+int UnixSocket::Send(const char* buf, int len, int flags) {
+    int result = send(m_socketfd, buf, len, flags);
     if (result == -1) {
         perror("send");
-    }
-    return result;
-}
-
-int UnixSocket::close(void) {
-    int result = ::shutdown(m_fd, SHUT_RDWR);
-    if (result == -1) {
-        perror("shutdown");
     }
     return result;
 }

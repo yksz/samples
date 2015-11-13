@@ -5,29 +5,29 @@
 namespace tcp {
 
 WindowsSocket::~WindowsSocket() {
-    close();
+    Close();
 }
 
-int WindowsSocket::recv(char* buf, int len, int flags) {
-    int result = ::recv(m_socket, buf, len, flags);
+int WindowsSocket::Close(void) {
+    int result = closesocket(m_socket);
+    if (result == -1) {
+        fprintf(stderr, "ERROR: close: %d\n", WSAGetLastError());
+    }
+    return result;
+}
+
+int WindowsSocket::Recv(char* buf, int len, int flags) {
+    int result = recv(m_socket, buf, len, flags);
     if (result == -1) {
         fprintf(stderr, "ERROR: recv: %d\n", WSAGetLastError());
     }
     return result;
 }
 
-int WindowsSocket::send(const char* buf, int len, int flags) {
-    int result = ::send(m_socket, buf, len, flags);
+int WindowsSocket::Send(const char* buf, int len, int flags) {
+    int result = send(m_socket, buf, len, flags);
     if (result == -1) {
         fprintf(stderr, "ERROR: send: %d\n", WSAGetLastError());
-    }
-    return result;
-}
-
-int WindowsSocket::close(void) {
-    int result = ::closesocket(m_socket);
-    if (result == -1) {
-        fprintf(stderr, "ERROR: close: %d\n", WSAGetLastError());
     }
     return result;
 }
