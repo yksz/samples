@@ -1,24 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-static void writeln(int sockfd, char* msg) {
-    if (write(sockfd, msg, strlen(msg)) == -1) {
+static void sendMsg(int sockfd, char* msg) {
+    if (send(sockfd, msg, strlen(msg), 0) == -1) {
         perror("write");
         return;
     }
-    if (write(sockfd, "\n", 1) == -1) {
+    if (send(sockfd, "\n", 1, 0) == -1) {
         perror("write");
         return;
     }
 }
 
-static void sendTCP(char* host, int port, char* msgs[], int msg_cnt)
+static void sendMsgsTo(char* host, int port, char* msgs[], int msg_cnt)
 {
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd == -1) {
@@ -38,10 +37,10 @@ static void sendTCP(char* host, int port, char* msgs[], int msg_cnt)
     }
 
     for (int i = 0; i < msg_cnt; i++) {
-        writeln(sockfd, msgs[i]);
+        sendMsg(sockfd, msgs[i]);
     }
 
-    close(sockfd);
+    shutdown(sockfd, SHUT_RDWR);
 }
 
 int main(int argc, char** argv)
@@ -58,6 +57,6 @@ int main(int argc, char** argv)
     for (int i = 0; i < msg_cnt; i++) {
         msgs[i] = argv[required_argc + i];
     }
-    sendTCP(host, port, msgs, msg_cnt);
+    sendMsgsTo(host, port, msgs, msg_cnt);
     return 0;
 }
