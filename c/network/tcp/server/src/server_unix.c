@@ -11,13 +11,13 @@ static const int kDefaultPort = 8080;
 static void recvAndPrint(int clientfd)
 {
     char buf[256];
-    int len;
-    while ((len = recv(clientfd, buf, sizeof(buf), 0)) > 0) {
-        for (int i = 0; i < len; i++) {
+    int size;
+    while ((size = recv(clientfd, buf, sizeof(buf), 0)) > 0) {
+        for (int i = 0; i < size; i++) {
             printf("%c", buf[i]);
         }
     }
-    if (len == -1) {
+    if (size == -1) {
         perror("read");
         return;
     }

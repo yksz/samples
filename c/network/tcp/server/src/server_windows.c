@@ -8,15 +8,15 @@ static const int kDefaultPort = 8080;
 static void recvAndPrint(SOCKET clientsock)
 {
     char buf[256];
-    int len;
+    int size;
     int i;
 
-    while ((len = recv(clientsock, buf, sizeof(buf), 0)) > 0) {
-        for (i = 0; i < len; i++) {
+    while ((size = recv(clientsock, buf, sizeof(buf), 0)) > 0) {
+        for (i = 0; i < size; i++) {
             printf("%c", buf[i]);
         }
     }
-    if (len == -1) {
+    if (size == -1) {
         fprintf(stderr, "ERROR: recv: %d\n", WSAGetLastError());
         return;
     }

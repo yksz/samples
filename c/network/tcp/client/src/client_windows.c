@@ -54,7 +54,7 @@ int main(int argc, char** argv)
     char* msg;
 
     if (argc <= 3) {
-        printf("usage: %s <host> <port> <messages>\n", argv[0]);
+        printf("usage: %s <host> <port> <message>\n", argv[0]);
         exit(1);
     }
     host = argv[1];
