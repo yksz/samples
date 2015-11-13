@@ -10,8 +10,8 @@ set(source_files
 )
 if(WIN32)
     set(source_files ${source_files}
-        src/server_win.cpp
-        src/socket_win.cpp
+        src/server_windows.cpp
+        src/socket_windows.cpp
     )
 else()
     set(source_files ${source_files}

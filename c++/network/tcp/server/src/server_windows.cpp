@@ -1,6 +1,7 @@
 #include "server_windows.h"
 #include <cstdio>
 #include <winsock2.h>
+#include "socket_windows.h"
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -36,6 +37,7 @@ bool WindowsServer::Run(int port) {
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_port = htons(port);
     serverAddr.sin_addr.S_un.S_addr = htonl(INADDR_ANY);
+
     if (bind(sock, (struct sockaddr*) &serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
         fprintf(stderr, "ERROR: bind: %d\n", WSAGetLastError());
         return false;
@@ -56,14 +58,14 @@ bool WindowsServer::Run(int port) {
     return true;
 }
 
-bool acceptClient(SOCKET server_sock)
+bool WindowsServer::acceptClient(SOCKET serversock)
 {
     struct sockaddr_in clientAddr;
     int len;
     SOCKET clientsock;
 
     len = sizeof(clientAddr);
-    clientsock = accept(server_sock, (struct sockaddr*) &clientAddr, &len);
+    clientsock = accept(serversock, (struct sockaddr*) &clientAddr, &len);
     if (clientsock == INVALID_SOCKET) {
         fprintf(stderr, "ERROR: socket: %d\n", WSAGetLastError());
         return false;

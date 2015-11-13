@@ -35,6 +35,7 @@ bool UnixServer::Run(int port) {
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_port = htons(port);
     serverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+
     if (bind(sockfd, (struct sockaddr*) &serverAddr, sizeof(serverAddr)) == -1) {
         perror("bind");
         return false;

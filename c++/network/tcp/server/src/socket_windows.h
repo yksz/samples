@@ -2,6 +2,7 @@
 #define SOCKET_WINDOWS_H
 
 #include <winsock2.h>
+#include "socket.h"
 
 namespace server {
 

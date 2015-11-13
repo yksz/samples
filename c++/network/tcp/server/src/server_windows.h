@@ -3,6 +3,7 @@
 
 #include <winsock2.h>
 #include "server.h"
+#include "thread_pool.h"
 
 namespace server {
 
@@ -18,7 +19,7 @@ public:
 private:
     ThreadPool* m_threadPool;
 
-    bool acceptClient(SOCKET serverSocket);
+    bool acceptClient(SOCKET serversock);
 };
 
 } // namespace server
