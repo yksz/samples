@@ -8,7 +8,7 @@
 
 static const int kDefaultPort = 8080;
 
-static void recvUDP(int sockfd)
+static void recvAndPrint(int sockfd)
 {
     char buf[64] = {0};
     if ((recvfrom(sockfd, buf, sizeof(buf), 0, NULL, NULL)) == -1) {
@@ -31,6 +31,7 @@ static void startReceiver(int port)
     recv_addr.sin_family = AF_INET;
     recv_addr.sin_port = htons(port);
     recv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+
     if (bind(sockfd, (struct sockaddr*) &recv_addr, sizeof(recv_addr)) == -1) {
         perror("bind");
         exit(1);
@@ -38,7 +39,7 @@ static void startReceiver(int port)
 
     printf("Listening on port %d\n", port);
     for (;;) {
-        recvUDP(sockfd);
+        recvAndPrint(sockfd);
     }
 
     close(sockfd);

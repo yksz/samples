@@ -5,7 +5,7 @@
 
 static const int kDefaultPort = 8080;
 
-static void recvUDP(SOCKET sock)
+static void recvAndPrint(SOCKET sock)
 {
     char buf[64] = {0};
     if ((recvfrom(sock, buf, sizeof(buf), 0, NULL, NULL)) == -1) {
@@ -36,6 +36,7 @@ static void startReceiver(int port)
     recv_addr.sin_family = AF_INET;
     recv_addr.sin_port = htons(port);
     recv_addr.sin_addr.S_un.S_addr = htonl(INADDR_ANY);
+
     if (bind(sock, (struct sockaddr*) &recv_addr, sizeof(recv_addr)) == SOCKET_ERROR) {
         fprintf(stderr, "ERROR: bind: %d\n", WSAGetLastError());
         exit(1);
@@ -43,7 +44,7 @@ static void startReceiver(int port)
 
     printf("Listening on port %d\n", port);
     for (;;) {
-        recvUDP(sock);
+        recvAndPrint(sock);
     }
 
     closesocket(sock);
