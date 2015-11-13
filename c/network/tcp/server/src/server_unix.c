@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -9,14 +8,13 @@
 
 static const int kDefaultPort = 8080;
 
-static void echo(int clientfd)
+static void recvAndPrint(int clientfd)
 {
     char buf[256];
     int len;
-    while ((len = read(clientfd, buf, sizeof(buf))) > 0) {
-        if (write(clientfd, buf, len) == -1) {
-            perror("write");
-            return;
+    while ((len = recv(clientfd, buf, sizeof(buf), 0)) > 0) {
+        for (int i = 0; i < len; i++) {
+            printf("%c", buf[i]);
         }
     }
     if (len == -1) {
@@ -37,9 +35,9 @@ static void acceptClient(int serverfd)
     }
     printf("%s connected\n", inet_ntoa(client_addr.sin_addr));
 
-    echo(clientfd);
+    recvAndPrint(clientfd);
 
-    close(clientfd);
+    shutdown(clientfd, SHUT_RDWR);
 }
 
 static void startServer(int port)
@@ -61,6 +59,7 @@ static void startServer(int port)
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
     server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+
     if (bind(sockfd, (struct sockaddr*) &server_addr, sizeof(server_addr)) == -1) {
         perror("bind");
         exit(1);
@@ -76,7 +75,7 @@ static void startServer(int port)
         acceptClient(sockfd);
     }
 
-    close(sockfd);
+    shutdown(sockfd, SHUT_RDWR);
 }
 
 int main(int argc, char** argv)

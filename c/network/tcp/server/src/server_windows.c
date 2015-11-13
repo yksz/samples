@@ -5,15 +5,15 @@
 
 static const int kDefaultPort = 8080;
 
-static void echo(SOCKET clientsock)
+static void recvAndPrint(SOCKET clientsock)
 {
     char buf[256];
     int len;
+    int i;
 
     while ((len = recv(clientsock, buf, sizeof(buf), 0)) > 0) {
-        if (send(clientsock, buf, len, 0) == -1) {
-            fprintf(stderr, "ERROR: send: %d\n", WSAGetLastError());
-            return;
+        for (i = 0; i < len; i++) {
+            printf("%c", buf[i]);
         }
     }
     if (len == -1) {
@@ -36,7 +36,7 @@ static void acceptClient(SOCKET server_sock)
     }
     printf("%s connected\n", inet_ntoa(client_addr.sin_addr));
 
-    echo(clientsock);
+    recvAndPrint(clientsock);
 
     closesocket(clientsock);
 }
@@ -66,6 +66,7 @@ static void startServer(int port)
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
     server_addr.sin_addr.S_un.S_addr = htonl(INADDR_ANY);
+
     if (bind(sock, (struct sockaddr*) &server_addr, sizeof(server_addr)) == SOCKET_ERROR) {
         fprintf(stderr, "ERROR: bind: %d\n", WSAGetLastError());
         exit(1);

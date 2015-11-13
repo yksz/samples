@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.8.4)
-project(echo_server C)
+project(server C)
 
 if(WIN32)
-    set(source_files ${source_files} src/echo_server_windows.c)
+    set(source_files ${source_files} src/server_windows.c)
 else()
-    set(source_files ${source_files} src/echo_server_unix.c)
+    set(source_files ${source_files} src/server_unix.c)
     add_definitions(-Wall -std=c99)
 endif()
 add_executable(${PROJECT_NAME} ${source_files})
