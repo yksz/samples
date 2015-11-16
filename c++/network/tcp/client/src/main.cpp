@@ -18,5 +18,5 @@ int main(int argc, char** argv) {
     client->Connect(host, port);
     client->Send(msg, strlen(msg));
     client->Send("\n", 1);
-    client->Close();
+    client->Disconnect();
 }

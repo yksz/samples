@@ -7,10 +7,10 @@
 namespace tcp {
 
 WindowsClient::~WindowsClient() {
-    Close();
+    Disconnect();
 }
 
-bool WindowsClient::Connect(char* host, int port) {
+bool WindowsClient::Connect(const char* host, int port) {
     if (m_connected) {
         return true;
     }
@@ -44,7 +44,7 @@ bool WindowsClient::Connect(char* host, int port) {
     return true;
 }
 
-bool WindowsClient::Close(void) {
+bool WindowsClient::Disconnect(void) {
     if (!m_connected) {
         return true;
     }

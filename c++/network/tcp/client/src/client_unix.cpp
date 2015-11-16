@@ -9,10 +9,10 @@
 namespace tcp {
 
 UnixClient::~UnixClient() {
-    Close();
+    Disconnect();
 }
 
-bool UnixClient::Connect(char* host, int port) {
+bool UnixClient::Connect(const char* host, int port) {
     if (m_connected) {
         return true;
     }
@@ -39,7 +39,7 @@ bool UnixClient::Connect(char* host, int port) {
     return true;
 }
 
-bool UnixClient::Close(void) {
+bool UnixClient::Disconnect(void) {
     if (!m_connected) {
         return true;
     }
