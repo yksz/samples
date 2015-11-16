@@ -9,6 +9,8 @@ public:
     virtual int Close(void) = 0;
     virtual int Recv(char* buf, int len, int flags = 0) = 0;
     virtual int Send(const char* buf, int len, int flags = 0) = 0;
+    bool RecvFully(char* buf, int len, int flags = 0);
+    bool SendFully(const char* buf, int len, int flags = 0);
 };
 
 } // namespace tcp
