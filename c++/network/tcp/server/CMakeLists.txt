@@ -6,6 +6,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
 set(source_files
     src/main.cpp
+    src/factory.cpp
     src/thread_pool.cpp
 )
 if(WIN32)

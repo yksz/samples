@@ -1,20 +1,8 @@
 #include <cstdio>
 #include <cstring>
-#if defined(_WIN32) || defined(_WIN64)
- #include "server_windows.h"
-#else
- #include "server_unix.h"
-#endif /* _WIN32 || _WIN64 */
+#include "factory.h"
 
 namespace {
-
-tcp::Server* createServer() {
-#if defined(_WIN32) || defined(_WIN64)
-    return new tcp::WindowsServer();
-#else
-    return new tcp::UnixServer();
-#endif /* _WIN32 || _WIN64 */
-}
 
 void serve(tcp::Socket& client) {
     char buf[256];
@@ -29,7 +17,8 @@ void serve(tcp::Socket& client) {
 } // unnamed namespace
 
 int main(void) {
-    tcp::Server* server = createServer();
+    tcp::Factory& factory = tcp::Factory::GetInstance();
+    tcp::Server* server = factory.createServer();
     server->RegisterService(serve);
     server->Run();
     delete server;
