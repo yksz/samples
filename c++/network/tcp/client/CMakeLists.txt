@@ -6,6 +6,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
 set(source_files
     src/main.cpp
+    src/factory.cpp
 )
 if(WIN32)
     set(source_files ${source_files}

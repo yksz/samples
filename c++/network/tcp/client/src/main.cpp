@@ -1,23 +1,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#if defined(_WIN32) || defined(_WIN64)
- #include "client_windows.h"
-#else
- #include "client_unix.h"
-#endif /* _WIN32 || _WIN64 */
-
-namespace {
-
-tcp::Client* createClient() {
-#if defined(_WIN32) || defined(_WIN64)
-    return new tcp::WindowsClient();
-#else
-    return new tcp::UnixClient();
-#endif /* _WIN32 || _WIN64 */
-}
-
-} // unnamed namespace
+#include <memory>
+#include "factory.h"
 
 int main(int argc, char** argv) {
     if (argc <= 3) {
@@ -28,10 +13,10 @@ int main(int argc, char** argv) {
     int port = atoi(argv[2]);
     char* msg = argv[3];
 
-    tcp::Client* client = createClient();
+    tcp::Factory& factory = tcp::Factory::GetInstance();
+    std::shared_ptr<tcp::Client> client = factory.createClient();
     client->Connect(host, port);
     client->Send(msg, strlen(msg));
     client->Send("\n", 1);
     client->Close();
-    delete client;
 }
