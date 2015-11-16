@@ -13,4 +13,4 @@ public:
 
 } // namespace tcp
 
-#endif /* SCOKET_H */
+#endif /* SOCKET_H */

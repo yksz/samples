@@ -22,4 +22,4 @@ private:
 
 } // namespace tcp
 
-#endif /* SCOKET_UNIX_H */
+#endif /* SOCKET_UNIX_H */

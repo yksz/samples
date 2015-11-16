@@ -23,4 +23,4 @@ private:
 
 } // namespace tcp
 
-#endif /* SCOKET_WINDOWS_H */
+#endif /* SOCKET_WINDOWS_H */
