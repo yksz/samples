@@ -12,15 +12,11 @@ Factory& Factory::GetInstance() {
     return instance;
 }
 
-Factory::Factory() {};
-
-Factory::~Factory() {};
-
 std::shared_ptr<Client> Factory::createClient() {
 #if defined(_WIN32) || defined(_WIN64)
-    return std::make_shared<tcp::WindowsClient>();
+    return std::make_shared<WindowsClient>();
 #else
-    return std::make_shared<tcp::UnixClient>();
+    return std::make_shared<UnixClient>();
 #endif /* _WIN32 || _WIN64 */
 }
 

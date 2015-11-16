@@ -12,15 +12,11 @@ Factory& Factory::GetInstance() {
     return instance;
 }
 
-Factory::Factory() {};
-
-Factory::~Factory() {};
-
 std::shared_ptr<Server> Factory::createServer() {
 #if defined(_WIN32) || defined(_WIN64)
-    return std::make_shared<tcp::WindowsServer>();
+    return std::make_shared<WindowsServer>();
 #else
-    return std::make_shared<tcp::UnixServer>();
+    return std::make_shared<UnixServer>();
 #endif /* _WIN32 || _WIN64 */
 }
 

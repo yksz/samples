@@ -12,10 +12,10 @@ public:
     std::shared_ptr<Client> createClient();
 
 private:
-    Factory();
-    ~Factory();
-    Factory(const Factory&);
-    void operator=(const Factory&);
+    Factory() = default;
+    ~Factory() = default;
+    Factory(const Factory&) = delete;
+    void operator=(const Factory&) = delete;
 };
 
 } // namespace tcp
