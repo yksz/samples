@@ -1,6 +1,7 @@
 #ifndef FACTORY_H
 #define FACTORY_H
 
+#include <memory>
 #include "server.h"
 
 namespace tcp {
@@ -8,7 +9,7 @@ namespace tcp {
 class Factory final {
 public:
     static Factory& GetInstance();
-    Server* createServer();
+    std::shared_ptr<Server> createServer();
 
 private:
     Factory();

@@ -16,11 +16,11 @@ Factory::Factory() {};
 
 Factory::~Factory() {};
 
-Server* Factory::createServer() {
+std::shared_ptr<Server> Factory::createServer() {
 #if defined(_WIN32) || defined(_WIN64)
-    return new tcp::WindowsServer();
+    return std::make_shared<tcp::WindowsServer>();
 #else
-    return new tcp::UnixServer();
+    return std::make_shared<tcp::UnixServer>();
 #endif /* _WIN32 || _WIN64 */
 }
 

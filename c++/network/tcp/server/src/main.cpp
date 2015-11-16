@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <cstring>
+#include <memory>
 #include "factory.h"
 
 namespace {
@@ -11,6 +12,7 @@ void serve(tcp::Socket& client) {
         for (int i = 0; i < size; i++) {
             printf("%c", buf[i]);
         }
+        printf("\n");
     }
 }
 
@@ -18,8 +20,7 @@ void serve(tcp::Socket& client) {
 
 int main(void) {
     tcp::Factory& factory = tcp::Factory::GetInstance();
-    tcp::Server* server = factory.createServer();
+    std::shared_ptr<tcp::Server> server = factory.createServer();
     server->RegisterService(serve);
     server->Run();
-    delete server;
 }
