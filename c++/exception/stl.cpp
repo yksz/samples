@@ -1,5 +1,5 @@
-#include <cstdio>
 #include <cstdlib>
+#include <iostream>
 #include <stdexcept>
 
 namespace {
@@ -15,7 +15,7 @@ int main(void) {
         doSomething();
         return EXIT_SUCCESS;
     } catch (const std::exception& e) {
-        printf("exception caught: %s\n", e.what());
+        std::cerr << "exception caught: " << e.what() << std::endl;
         return EXIT_FAILURE;
     } catch (...) {
         return EXIT_FAILURE;
