@@ -31,7 +31,7 @@ static void acceptClient(SOCKET server_sock)
     len = sizeof(client_addr);
     clientsock = accept(server_sock, (struct sockaddr*) &client_addr, &len);
     if (clientsock == INVALID_SOCKET) {
-        fprintf(stderr, "ERROR: socket: %d\n", WSAGetLastError());
+        fprintf(stderr, "ERROR: accept: %d\n", WSAGetLastError());
         exit(1);
     }
     printf("%s connected\n", inet_ntoa(client_addr.sin_addr));
