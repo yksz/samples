@@ -58,7 +58,7 @@ bool WindowsServer::Run(int port) {
     return true;
 }
 
-bool WindowsServer::acceptClient(SOCKET serversock)
+bool WindowsServer::acceptClient(SOCKET& serversock)
 {
     struct sockaddr_in clientAddr;
     int len;
@@ -67,7 +67,7 @@ bool WindowsServer::acceptClient(SOCKET serversock)
     len = sizeof(clientAddr);
     clientsock = accept(serversock, (struct sockaddr*) &clientAddr, &len);
     if (clientsock == INVALID_SOCKET) {
-        fprintf(stderr, "ERROR: socket: %d\n", WSAGetLastError());
+        fprintf(stderr, "ERROR: accept: %d\n", WSAGetLastError());
         return false;
     }
     printf("%s connected\n", inet_ntoa(clientAddr.sin_addr));

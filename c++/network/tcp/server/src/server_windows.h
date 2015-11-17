@@ -19,7 +19,7 @@ public:
 private:
     ThreadPool* m_threadPool;
 
-    bool acceptClient(SOCKET serversock);
+    bool acceptClient(SOCKET& serversock);
 };
 
 } // namespace tcp
