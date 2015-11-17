@@ -1,5 +1,5 @@
-#ifndef BLOCKING_QUEUE_H
-#define BLOCKING_QUEUE_H
+#ifndef TCP_BLOCKING_QUEUE_H
+#define TCP_BLOCKING_QUEUE_H
 
 #include <cstddef>
 #include <condition_variable>
@@ -33,4 +33,4 @@ private:
 
 #include "blocking_queue_impl.h"
 
-#endif /* BLOCKING_QUEUE_H */
+#endif /* TCP_BLOCKING_QUEUE_H */

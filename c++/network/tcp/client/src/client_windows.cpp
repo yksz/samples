@@ -1,4 +1,5 @@
 #include "client_windows.h"
+#include <cassert>
 #include <cstdio>
 #include <winsock2.h>
 
@@ -61,7 +62,7 @@ bool WindowsClient::Disconnect(void) {
 
 int WindowsClient::Recv(char* buf, int len, int flags) {
     if (!m_connected) {
-        fprintf(stderr, "ERROR: Recv: Not connected\n");
+        assert(0 && "Not connected");
         return -1;
     }
 
@@ -74,7 +75,7 @@ int WindowsClient::Recv(char* buf, int len, int flags) {
 
 int WindowsClient::Send(const char* buf, int len, int flags) {
     if (!m_connected) {
-        fprintf(stderr, "ERROR: Recv: Not connected\n");
+        assert(0 && "Not connected");
         return -1;
     }
 

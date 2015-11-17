@@ -1,5 +1,5 @@
-#ifndef FACTORY_H
-#define FACTORY_H
+#ifndef TCP_FACTORY_H
+#define TCP_FACTORY_H
 
 #include <memory>
 #include "client.h"
@@ -20,4 +20,4 @@ private:
 
 } // namespace tcp
 
-#endif /* FACTORY_H */
+#endif /* TCP_FACTORY_H */

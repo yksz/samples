@@ -1,5 +1,5 @@
-#ifndef CLIENT_WINDOWS_H
-#define CLIENT_WINDOWS_H
+#ifndef TCP_CLIENT_WINDOWS_H
+#define TCP_CLIENT_WINDOWS_H
 
 #include <winsock2.h>
 #include "client.h"
@@ -25,4 +25,4 @@ private:
 
 } // namespace tcp
 
-#endif /* CLIENT_WINDOWS_H */
+#endif /* TCP_CLIENT_WINDOWS_H */

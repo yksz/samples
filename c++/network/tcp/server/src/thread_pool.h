@@ -1,5 +1,5 @@
-#ifndef THREAD_POOL_H
-#define THREAD_POOL_H
+#ifndef TCP_THREAD_POOL_H
+#define TCP_THREAD_POOL_H
 
 #include <cstddef>
 #include <functional>
@@ -22,4 +22,4 @@ private:
 
 } // namespace tcp
 
-#endif /* THREAD_POOL_H */
+#endif /* TCP_THREAD_POOL_H */

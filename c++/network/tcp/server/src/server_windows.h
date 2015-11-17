@@ -1,5 +1,5 @@
-#ifndef SERVER_WINDOWS_H
-#define SERVER_WINDOWS_H
+#ifndef TCP_SERVER_WINDOWS_H
+#define TCP_SERVER_WINDOWS_H
 
 #include <winsock2.h>
 #include "server.h"
@@ -24,4 +24,4 @@ private:
 
 } // namespace tcp
 
-#endif /* SERVER_WINDOWS_H */
+#endif /* TCP_SERVER_WINDOWS_H */

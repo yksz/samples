@@ -1,5 +1,5 @@
-#ifndef CLIENT_H
-#define CLIENT_H
+#ifndef TCP_CLIENT_H
+#define TCP_CLIENT_H
 
 namespace tcp {
 
@@ -14,4 +14,4 @@ public:
 
 } // namespace tcp
 
-#endif /* CLIENT_H */
+#endif /* TCP_CLIENT_H */

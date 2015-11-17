@@ -1,5 +1,5 @@
-#ifndef CLIENT_UNIX_H
-#define CLIENT_UNIX_H
+#ifndef TCP_CLIENT_UNIX_H
+#define TCP_CLIENT_UNIX_H
 
 #include "client.h"
 
@@ -24,4 +24,4 @@ private:
 
 } // namespace tcp
 
-#endif /* CLIENT_UNIX_H */
+#endif /* TCP_CLIENT_UNIX_H */

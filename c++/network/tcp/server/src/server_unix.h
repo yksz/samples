@@ -1,5 +1,5 @@
-#ifndef SERVER_UNIX_H
-#define SERVER_UNIX_H
+#ifndef TCP_SERVER_UNIX_H
+#define TCP_SERVER_UNIX_H
 
 #include "server.h"
 #include "thread_pool.h"
@@ -23,4 +23,4 @@ private:
 
 } // namespace tcp
 
-#endif /* SERVER_UNIX_H */
+#endif /* TCP_SERVER_UNIX_H */

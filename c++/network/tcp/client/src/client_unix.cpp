@@ -1,4 +1,5 @@
 #include "client_unix.h"
+#include <cassert>
 #include <cstdio>
 #include <cstring>
 #include <sys/types.h>
@@ -55,7 +56,7 @@ bool UnixClient::Disconnect(void) {
 
 int UnixClient::Recv(char* buf, int len, int flags) {
     if (!m_connected) {
-        fprintf(stderr, "ERROR: Recv: Not connected\n");
+        assert(0 && "Not connected");
         return -1;
     }
 
@@ -68,7 +69,7 @@ int UnixClient::Recv(char* buf, int len, int flags) {
 
 int UnixClient::Send(const char* buf, int len, int flags) {
     if (!m_connected) {
-        fprintf(stderr, "ERROR: Send: Not connected\n");
+        assert(0 && "Not connected");
         return -1;
     }
 

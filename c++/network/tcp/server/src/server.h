@@ -1,5 +1,5 @@
-#ifndef SERVER_H
-#define SERVER_H
+#ifndef TCP_SERVER_H
+#define TCP_SERVER_H
 
 #include "socket.h"
 
@@ -19,4 +19,4 @@ protected:
 
 } // namespace tcp
 
-#endif /* SERVER_H */
+#endif /* TCP_SERVER_H */
