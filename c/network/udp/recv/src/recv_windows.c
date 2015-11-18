@@ -5,10 +5,10 @@
 
 static const int kDefaultPort = 8080;
 
-static void recvAndPrint(SOCKET sock)
+static void recvAndPrint(SOCKET* sock)
 {
     char buf[64] = {0};
-    if ((recvfrom(sock, buf, sizeof(buf), 0, NULL, NULL)) == -1) {
+    if ((recvfrom(*sock, buf, sizeof(buf), 0, NULL, NULL)) == -1) {
         fprintf(stderr, "ERROR: recvfrom: %d\n", WSAGetLastError());
         return;
     }
@@ -44,7 +44,7 @@ static void startReceiver(int port)
 
     printf("Listening on port %d\n", port);
     for (;;) {
-        recvAndPrint(sock);
+        recvAndPrint(&sock);
     }
 
     closesocket(sock);

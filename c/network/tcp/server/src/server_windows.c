@@ -5,13 +5,13 @@
 
 static const int kDefaultPort = 8080;
 
-static void recvAndPrint(SOCKET clientsock)
+static void recvAndPrint(SOCKET* client_sock)
 {
     char buf[256];
     int size;
     int i;
 
-    while ((size = recv(clientsock, buf, sizeof(buf), 0)) > 0) {
+    while ((size = recv(*client_sock, buf, sizeof(buf), 0)) > 0) {
         for (i = 0; i < size; i++) {
             printf("%c", buf[i]);
         }
@@ -22,23 +22,23 @@ static void recvAndPrint(SOCKET clientsock)
     }
 }
 
-static void acceptClient(SOCKET server_sock)
+static void acceptClient(SOCKET* server_sock)
 {
     struct sockaddr_in client_addr;
     int len;
-    SOCKET clientsock;
+    SOCKET client_sock;
 
     len = sizeof(client_addr);
-    clientsock = accept(server_sock, (struct sockaddr*) &client_addr, &len);
-    if (clientsock == INVALID_SOCKET) {
-        fprintf(stderr, "ERROR: accept: %d\n", WSAGetLastError());
+    client_sock = accept(*server_sock, (struct sockaddr*) &client_addr, &len);
+    if (client_sock == INVALID_SOCKET) {
+        fprintf(stderr, "ERROR: socket: %d\n", WSAGetLastError());
         exit(1);
     }
     printf("%s connected\n", inet_ntoa(client_addr.sin_addr));
 
-    recvAndPrint(clientsock);
+    recvAndPrint(&client_sock);
 
-    closesocket(clientsock);
+    closesocket(client_sock);
 }
 
 static void startServer(int port)
@@ -79,7 +79,7 @@ static void startServer(int port)
 
     printf("Listening on port %d\n", port);
     for (;;) {
-        acceptClient(sock);
+        acceptClient(&sock);
     }
 
     closesocket(sock);

@@ -3,12 +3,12 @@
 
 #pragma comment(lib, "ws2_32.lib")
 
-static void sendMsg(SOCKET sock, char* msg) {
-    if (send(sock, msg, strlen(msg), 0) == -1) {
+static void sendMsg(SOCKET* sock, char* msg) {
+    if (send(*sock, msg, strlen(msg), 0) == -1) {
         fprintf(stderr, "ERROR: send: %d\n", WSAGetLastError());
         return;
     }
-    if (send(sock, "\n", 1, 0) == -1) {
+    if (send(*sock, "\n", 1, 0) == -1) {
         fprintf(stderr, "ERROR: send: %d\n", WSAGetLastError());
         return;
     }
@@ -41,7 +41,7 @@ static void sendMsgTo(char* host, int port, char* msg)
         exit(1);
     }
 
-    sendMsg(sock, msg);
+    sendMsg(&sock, msg);
 
     closesocket(sock);
     WSACleanup();
