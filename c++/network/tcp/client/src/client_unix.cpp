@@ -40,7 +40,7 @@ bool UnixClient::Connect(const char* host, int port) {
     return true;
 }
 
-bool UnixClient::Disconnect(void) {
+bool UnixClient::Disconnect() {
     if (!m_connected) {
         return true;
     }

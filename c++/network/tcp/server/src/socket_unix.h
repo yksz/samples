@@ -12,8 +12,8 @@ public:
     UnixSocket(const UnixSocket&) = delete;
     UnixSocket& operator=(const UnixSocket&) = delete;
 
-    int Close(void);
-    bool IsClosed(void);
+    int Close();
+    bool IsClosed();
     int Recv(char* buf, int len, int flags);
     int Send(const char* buf, int len, int flags);
 

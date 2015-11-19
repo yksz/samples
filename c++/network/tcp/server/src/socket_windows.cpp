@@ -9,7 +9,7 @@ WindowsSocket::~WindowsSocket() {
     Close();
 }
 
-int WindowsSocket::Close(void) {
+int WindowsSocket::Close() {
     if (IsClosed()) {
         return 0;
     }
@@ -22,7 +22,7 @@ int WindowsSocket::Close(void) {
     return result;
 }
 
-bool WindowsSocket::IsClosed(void) {
+bool WindowsSocket::IsClosed() {
     return m_closed;
 }
 

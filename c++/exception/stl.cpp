@@ -2,13 +2,9 @@
 #include <iostream>
 #include <stdexcept>
 
-namespace {
-
-void doSomething() {
+static void doSomething() {
     throw std::logic_error("doSomething");
 }
-
-} // unnamed namespace
 
 int main(void) {
     try {

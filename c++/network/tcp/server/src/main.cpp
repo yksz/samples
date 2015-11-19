@@ -3,9 +3,7 @@
 #include <memory>
 #include "factory.h"
 
-namespace {
-
-void serve(tcp::Socket& client) {
+static void serve(tcp::Socket& client) {
     char buf[256];
     int size;
     while ((size = client.Recv(buf, sizeof(buf))) > 0) {
@@ -15,8 +13,6 @@ void serve(tcp::Socket& client) {
         printf("\n");
     }
 }
-
-} // unnamed namespace
 
 int main(void) {
     tcp::Factory& factory = tcp::Factory::GetInstance();

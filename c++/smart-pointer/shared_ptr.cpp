@@ -27,15 +27,15 @@ private:
     void operator=(const Book&);
 };
 
-void readBook(const std::shared_ptr<Book>& book) {
-    std::cout << "Read Book[name=" << book->GetName() << "]" << std::endl;
-}
-
-void readBook(const Book* book) {
-    std::cout << "Read Book[name=" << book->GetName() << "]" << std::endl;
-}
-
 } // unnamed namespace
+
+static void readBook(const std::shared_ptr<Book>& book) {
+    std::cout << "Read Book[name=" << book->GetName() << "]" << std::endl;
+}
+
+static void readBook(const Book* book) {
+    std::cout << "Read Book[name=" << book->GetName() << "]" << std::endl;
+}
 
 int main(void) {
     std::shared_ptr<Book> book = std::make_shared<Book>("foo");

@@ -9,7 +9,7 @@ UnixSocket::~UnixSocket() {
     Close();
 }
 
-int UnixSocket::Close(void) {
+int UnixSocket::Close() {
     if (IsClosed()) {
         return 0;
     }
@@ -22,7 +22,7 @@ int UnixSocket::Close(void) {
     return result;
 }
 
-bool UnixSocket::IsClosed(void) {
+bool UnixSocket::IsClosed() {
     return m_closed;
 }
 

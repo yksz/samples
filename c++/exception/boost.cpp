@@ -6,11 +6,11 @@ namespace {
 
 class my_error : public boost::exception, public std::exception {};
 
-void doSomething() {
+} // unnamed namespace
+
+static void doSomething() {
     BOOST_THROW_EXCEPTION(my_error());
 }
-
-} // unnamed namespace
 
 int main(void) {
     try {

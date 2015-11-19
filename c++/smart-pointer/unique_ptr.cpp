@@ -1,9 +1,7 @@
 #include <cstdio>
 #include <memory>
 
-namespace {
-
-void printArray(int* array, int len) {
+static void printArray(int* array, int len) {
     printf("[%d", array[0]);
     for (int i = 1; i < len; i++) {
         printf(", %d", array[i]);
@@ -11,15 +9,13 @@ void printArray(int* array, int len) {
     printf("]\n");
 }
 
-void printArray(std::unique_ptr<int[]> array, int len) {
+static void printArray(std::unique_ptr<int[]> array, int len) {
     printf("[%d", array[0]);
     for (int i = 1; i < len; i++) {
         printf(", %d", array[i]);
     }
     printf("]\n");
 }
-
-} // unnamed namespace
 
 int main(void) {
     int len = 10;

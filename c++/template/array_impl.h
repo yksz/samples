@@ -2,18 +2,6 @@
 #include <sstream>
 #include <stdexcept>
 
-namespace {
-
-void checkIndex(int index, int size) {
-    if (index < 0 || index >= size) {
-        std::stringstream msg;
-        msg << "checkIndex: index=" << index << ", size=" << size;
-        throw std::out_of_range(msg.str());
-    }
-}
-
-} // unnamed namespace
-
 template<typename T>
 Array<T>::Array() : m_size(10) {
     init(m_size);
@@ -42,6 +30,14 @@ T& Array<T>::operator[](int index) const {
 template<typename T>
 int Array<T>::Size() const {
     return m_size;
+}
+
+static void checkIndex(int index, int size) {
+    if (index < 0 || index >= size) {
+        std::stringstream msg;
+        msg << "checkIndex: index=" << index << ", size=" << size;
+        throw std::out_of_range(msg.str());
+    }
 }
 
 template<typename T>

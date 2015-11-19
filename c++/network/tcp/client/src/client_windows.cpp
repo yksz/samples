@@ -45,7 +45,7 @@ bool WindowsClient::Connect(const char* host, int port) {
     return true;
 }
 
-bool WindowsClient::Disconnect(void) {
+bool WindowsClient::Disconnect() {
     if (!m_connected) {
         return true;
     }
