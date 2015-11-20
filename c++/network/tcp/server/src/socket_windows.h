@@ -8,7 +8,7 @@ namespace tcp {
 
 class WindowsSocket final : public Socket {
 public:
-    WindowsSocket(SOCKET socket) : m_socket(socket), m_closed(false) {};
+    explicit WindowsSocket(SOCKET socket) : m_socket(socket), m_closed(false) {};
     ~WindowsSocket();
     WindowsSocket(const WindowsSocket&) = delete;
     WindowsSocket& operator=(const WindowsSocket&) = delete;

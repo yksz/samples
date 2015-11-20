@@ -7,7 +7,7 @@ namespace tcp {
 
 class UnixSocket final : public Socket {
 public:
-    UnixSocket(int socketfd) : m_socketfd(socketfd), m_closed(false) {};
+    explicit UnixSocket(int socketfd) : m_socketfd(socketfd), m_closed(false) {};
     ~UnixSocket();
     UnixSocket(const UnixSocket&) = delete;
     UnixSocket& operator=(const UnixSocket&) = delete;
