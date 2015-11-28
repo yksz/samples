@@ -38,7 +38,9 @@ public:
     }
 
     void Dispatch(std::function<void()>&& task) {
-        m_queue.Emplace(std::move(task));
+        if (task.target_type() != m_poison.target_type()) {
+            m_queue.Emplace(std::move(task));
+        }
     }
 };
 
