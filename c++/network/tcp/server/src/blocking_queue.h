@@ -20,7 +20,7 @@ public:
     void Emplace(T&& element);
     T Pop();
     void Pop(T& element);
-    std::size_t Size();
+    size_t Size();
     bool Empty();
 
 private:

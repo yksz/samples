@@ -42,7 +42,7 @@ void BlockingQueue<T>::Pop(T& element) {
 }
 
 template<typename T>
-std::size_t BlockingQueue<T>::Size() {
+size_t BlockingQueue<T>::Size() {
     std::unique_lock<std::mutex> lock(m_mutex);
     return m_queue.size();
 }

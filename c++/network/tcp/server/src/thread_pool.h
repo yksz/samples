@@ -8,7 +8,7 @@ namespace tcp {
 
 class ThreadPool final {
 public:
-    explicit ThreadPool(std::size_t numThreads);
+    explicit ThreadPool(size_t numThreads);
     ~ThreadPool();
     ThreadPool(const ThreadPool&) = delete;
     ThreadPool& operator=(const ThreadPool&) = delete;
