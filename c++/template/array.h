@@ -14,13 +14,13 @@ public:
     void Set(int index, const T& element);
 
 private:
+    const int m_size;
+    T* m_array;
+
     Array(const Array&);
     void operator=(const Array&);
 
     void init(int size);
-
-    const int m_size;
-    T* m_array;
 };
 
 #include "array_impl.h"
