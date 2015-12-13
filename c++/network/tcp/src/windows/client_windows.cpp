@@ -41,7 +41,7 @@ bool WindowsClient::Connect(const char* host, int port) {
     }
 
     m_connected = true;
-    m_socket = sock;
+    m_socket = std::make_shared<WindowsSocket>(sock);
     return true;
 }
 
@@ -50,14 +50,13 @@ bool WindowsClient::Disconnect() {
         return true;
     }
 
-    int result = closesocket(m_socket);
-    if (result == -1) {
-        fprintf(stderr, "ERROR: close: %d\n", WSAGetLastError());
-        return false;
-    }
-    WSACleanup();
+    m_socket->Close();
     m_connected = false;
     return true;
+}
+
+bool WindowsClient::IsConnected() {
+    return m_connected;
 }
 
 int WindowsClient::Recv(char* buf, int len, int flags) {
@@ -66,11 +65,7 @@ int WindowsClient::Recv(char* buf, int len, int flags) {
         return -1;
     }
 
-    int result = recv(m_socket, buf, len, flags);
-    if (result == -1) {
-        fprintf(stderr, "ERROR: recv: %d\n", WSAGetLastError());
-    }
-    return result;
+    return m_socket->Recv(buf, len, flags);
 }
 
 int WindowsClient::Send(const char* buf, int len, int flags) {
@@ -79,11 +74,25 @@ int WindowsClient::Send(const char* buf, int len, int flags) {
         return -1;
     }
 
-    int result = send(m_socket, buf, len, flags);
-    if (result == -1) {
-        fprintf(stderr, "ERROR: send: %d\n", WSAGetLastError());
+    return m_socket->Send(buf, len, flags);
+}
+
+bool WindowsClient::RecvFully(char* buf, int len, int flags) {
+    if (!m_connected) {
+        assert(0 && "Not connected");
+        return false;
     }
-    return result;
+
+    return m_socket->RecvFully(buf, len, flags);
+}
+
+bool WindowsClient::SendFully(const char* buf, int len, int flags) {
+    if (!m_connected) {
+        assert(0 && "Not connected");
+        return false;
+    }
+
+    return m_socket->SendFully(buf, len, flags);
 }
 
 } // namespace tcp

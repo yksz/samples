@@ -22,11 +22,11 @@ std::shared_ptr<Client> Factory::createClient() {
 #endif // _WIN32 || _WIN64
 }
 
-std::shared_ptr<Server> Factory::createServer() {
+std::shared_ptr<Server> Factory::createServer(size_t numThreads) {
 #if defined(_WIN32) || defined(_WIN64)
-    return std::make_shared<WindowsServer>();
+    return std::make_shared<WindowsServer>(numThreads);
 #else
-    return std::make_shared<UnixServer>();
+    return std::make_shared<UnixServer>(numThreads);
 #endif // _WIN32 || _WIN64
 }
 

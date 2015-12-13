@@ -1,6 +1,7 @@
 #ifndef TCP_SERVER_UNIX_H
 #define TCP_SERVER_UNIX_H
 
+#include <cstddef>
 #include "server.h"
 #include "thread_pool.h"
 
@@ -8,7 +9,7 @@ namespace tcp {
 
 class UnixServer final : public Server {
 public:
-    UnixServer();
+    explicit UnixServer(size_t numThreads);
     ~UnixServer();
     UnixServer(const UnixServer&) = delete;
     UnixServer& operator=(const UnixServer&) = delete;

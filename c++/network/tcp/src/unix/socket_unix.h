@@ -1,6 +1,7 @@
 #ifndef TCP_SOCKET_UNIX_H
 #define TCP_SOCKET_UNIX_H
 
+#include <atomic>
 #include "socket.h"
 
 namespace tcp {
@@ -19,7 +20,7 @@ public:
 
 private:
     int m_socketfd;
-    bool m_closed;
+    std::atomic<bool> m_closed;
 };
 
 } // namespace tcp

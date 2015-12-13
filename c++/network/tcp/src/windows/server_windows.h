@@ -1,6 +1,7 @@
 #ifndef TCP_SERVER_WINDOWS_H
 #define TCP_SERVER_WINDOWS_H
 
+#include <cstddef>
 #include <winsock2.h>
 #include "server.h"
 #include "thread_pool.h"
@@ -9,7 +10,7 @@ namespace tcp {
 
 class WindowsServer final : public Server {
 public:
-    WindowsServer();
+    explicit WindowsServer(size_t numThreads);
     ~WindowsServer();
     WindowsServer(const WindowsServer&) = delete;
     WindowsServer& operator=(const WindowsServer&) = delete;

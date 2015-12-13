@@ -7,8 +7,8 @@
 
 namespace tcp {
 
-WindowsServer::WindowsServer()
-        : m_threadPool(new ThreadPool(10)) {
+WindowsServer::WindowsServer(size_t numThreads)
+        : m_threadPool(new ThreadPool(numThreads)) {
 }
 
 WindowsServer::~WindowsServer() {
@@ -74,8 +74,8 @@ bool WindowsServer::acceptClient(SOCKET& serversock)
 
     if (m_serve != NULL) {
         m_threadPool->Dispatch([this, clientsock]() {
-            WindowsSocket client(clientsock);
-            m_serve(client);
+            WindowsSocket clientSock(clientsock);
+            m_serve(clientSock);
         });
     }
     return true;

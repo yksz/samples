@@ -1,8 +1,11 @@
 #ifndef TCP_CLIENT_WINDOWS_H
 #define TCP_CLIENT_WINDOWS_H
 
+#include <atomic>
+#include <memory>
 #include <winsock2.h>
 #include "client.h"
+#include "socket_windows.h"
 
 namespace tcp {
 
@@ -15,12 +18,15 @@ public:
 
     bool Connect(const char* host, int port);
     bool Disconnect();
+    bool IsConnected();
     int Recv(char* buf, int len, int flags);
     int Send(const char* buf, int len, int flags);
+    bool RecvFully(char* buf, int len, int flags);
+    bool SendFully(const char* buf, int len, int flags);
 
 private:
-    SOCKET m_socket;
-    bool m_connected;
+    std::shared_ptr<WindowsSocket> m_socket;
+    std::atomic<bool> m_connected;
 };
 
 } // namespace tcp

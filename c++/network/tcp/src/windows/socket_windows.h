@@ -1,6 +1,7 @@
 #ifndef TCP_SOCKET_WINDOWS_H
 #define TCP_SOCKET_WINDOWS_H
 
+#include <atomic>
 #include <winsock2.h>
 #include "socket.h"
 
@@ -20,7 +21,7 @@ public:
 
 private:
     SOCKET m_socket;
-    bool m_closed;
+    std::atomic<bool> m_closed;
 };
 
 } // namespace tcp

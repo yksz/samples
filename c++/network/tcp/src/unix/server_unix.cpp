@@ -10,8 +10,8 @@
 
 namespace tcp {
 
-UnixServer::UnixServer()
-        : m_threadPool(new ThreadPool(10)) {
+UnixServer::UnixServer(size_t numThreads)
+        : m_threadPool(new ThreadPool(numThreads)) {
 }
 
 UnixServer::~UnixServer() {
@@ -69,8 +69,8 @@ bool UnixServer::acceptClient(int serverfd) {
 
     if (m_serve != NULL) {
         m_threadPool->Dispatch([this, clientfd]() {
-            UnixSocket client(clientfd);
-            m_serve(client);
+            UnixSocket clientSock(clientfd);
+            m_serve(clientSock);
         });
     }
     return true;

@@ -1,6 +1,7 @@
 #ifndef TCP_FACTORY_H
 #define TCP_FACTORY_H
 
+#include <cstddef>
 #include <memory>
 #include "client.h"
 #include "server.h"
@@ -11,7 +12,7 @@ class Factory final {
 public:
     static Factory& GetInstance();
     std::shared_ptr<Client> createClient();
-    std::shared_ptr<Server> createServer();
+    std::shared_ptr<Server> createServer(size_t numThreads);
 
 private:
     Factory() = default;
