@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "client.h"
+#include "server.h"
 
 namespace tcp {
 
@@ -10,6 +11,7 @@ class Factory final {
 public:
     static Factory& GetInstance();
     std::shared_ptr<Client> createClient();
+    std::shared_ptr<Server> createServer();
 
 private:
     Factory() = default;
