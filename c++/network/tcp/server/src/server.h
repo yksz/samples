@@ -19,4 +19,4 @@ protected:
 
 } // namespace tcp
 
-#endif /* TCP_SERVER_H */
+#endif // TCP_SERVER_H

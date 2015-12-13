@@ -3,7 +3,7 @@
  #include "server_windows.h"
 #else
  #include "server_unix.h"
-#endif /* _WIN32 || _WIN64 */
+#endif // _WIN32 || _WIN64
 
 namespace tcp {
 
@@ -17,7 +17,7 @@ std::shared_ptr<Server> Factory::createServer() {
     return std::make_shared<WindowsServer>();
 #else
     return std::make_shared<UnixServer>();
-#endif /* _WIN32 || _WIN64 */
+#endif // _WIN32 || _WIN64
 }
 
 } // namespace tcp

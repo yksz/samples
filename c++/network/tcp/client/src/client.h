@@ -14,4 +14,4 @@ public:
 
 } // namespace tcp
 
-#endif /* TCP_CLIENT_H */
+#endif // TCP_CLIENT_H

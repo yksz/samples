@@ -20,4 +20,4 @@ private:
 
 } // namespace tcp
 
-#endif /* TCP_FACTORY_H */
+#endif // TCP_FACTORY_H

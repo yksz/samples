@@ -16,4 +16,4 @@ public:
 
 } // namespace tcp
 
-#endif /* TCP_SOCKET_H */
+#endif // TCP_SOCKET_H

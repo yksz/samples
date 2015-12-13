@@ -33,4 +33,4 @@ private:
 
 #include "blocking_queue_impl.h"
 
-#endif /* TCP_BLOCKING_QUEUE_H */
+#endif // TCP_BLOCKING_QUEUE_H

@@ -24,4 +24,4 @@ private:
 
 } // namespace tcp
 
-#endif /* TCP_CLIENT_UNIX_H */
+#endif // TCP_CLIENT_UNIX_H

@@ -3,7 +3,7 @@
  #include "client_windows.h"
 #else
  #include "client_unix.h"
-#endif /* _WIN32 || _WIN64 */
+#endif // _WIN32 || _WIN64
 
 namespace tcp {
 
@@ -17,7 +17,7 @@ std::shared_ptr<Client> Factory::createClient() {
     return std::make_shared<WindowsClient>();
 #else
     return std::make_shared<UnixClient>();
-#endif /* _WIN32 || _WIN64 */
+#endif // _WIN32 || _WIN64
 }
 
 } // namespace tcp

@@ -25,4 +25,4 @@ private:
 
 } // namespace tcp
 
-#endif /* TCP_SOCKET_WINDOWS_H */
+#endif // TCP_SOCKET_WINDOWS_H

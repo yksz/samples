@@ -22,4 +22,4 @@ private:
 
 } // namespace tcp
 
-#endif /* TCP_THREAD_POOL_H */
+#endif // TCP_THREAD_POOL_H
