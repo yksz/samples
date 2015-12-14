@@ -9,7 +9,7 @@ enum ByteOrder {
     ByteOrder_LITTLE_ENDIAN
 };
 
-ByteOrder nativeOrder();
+ByteOrder NativeOrder();
 
 class ByteBuffer final {
 public:

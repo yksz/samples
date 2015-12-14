@@ -25,7 +25,7 @@ int main(void) {
     printf("%d\n", r.GetUint8());
     printf("%d\n", r.GetUint16());
     printf("%d\n", r.GetUint32());
-    printf("%d\n", r.GetUint64());
+    printf("%ld\n", r.GetUint64());
     printf("%f\n", r.GetFloat());
     printf("%f\n", r.GetDouble());
     return 0;

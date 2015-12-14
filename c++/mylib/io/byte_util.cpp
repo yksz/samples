@@ -13,13 +13,13 @@ static bool isLittleEndian() {
 #endif
 }
 
-ByteOrder nativeOrder() {
+ByteOrder NativeOrder() {
     return isLittleEndian() ? ByteOrder_LITTLE_ENDIAN : ByteOrder_BIG_ENDIAN;
 }
 
 ByteBuffer::ByteBuffer(char* buf, size_t len, ByteOrder order)
         : m_buf(buf), m_len(len), m_offset(0) {
-    m_shouldConvertEndian = nativeOrder() != order;
+    m_shouldConvertEndian = NativeOrder() != order;
 }
 
 static uint16_t byteSwap16(uint16_t x) {
