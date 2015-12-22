@@ -15,7 +15,7 @@ public:
     UnixClient(const UnixClient&) = delete;
     UnixClient& operator=(const UnixClient&) = delete;
 
-    bool Connect(const char* host, int port);
+    bool Connect(const char* host, int port, int timeout);
     bool Disconnect();
     bool IsConnected();
     int Recv(char* buf, int len, int flags);

@@ -4,6 +4,7 @@
 #include <cstring>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/ioctl.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
@@ -13,7 +14,7 @@ UnixClient::~UnixClient() {
     Disconnect();
 }
 
-bool UnixClient::Connect(const char* host, int port) {
+bool UnixClient::Connect(const char* host, int port, int timeout) {
     if (m_connected) {
         return true;
     }
@@ -30,14 +31,34 @@ bool UnixClient::Connect(const char* host, int port) {
     serverAddr.sin_port = htons(port);
     serverAddr.sin_addr.s_addr = inet_addr(host);
 
-    if (connect(sockfd, (struct sockaddr*) &serverAddr, sizeof(serverAddr)) < 0) {
-        perror("connect");
+    int mode = 1;
+    if (ioctl(sockfd, FIONBIO, &mode) == -1) {
+        perror("ioctl");
         return false;
     }
 
-    m_connected = true;
-    m_socket = std::make_shared<UnixSocket>(sockfd);
-    return true;
+    connect(sockfd, (struct sockaddr*) &serverAddr, sizeof(serverAddr));
+
+    fd_set fdset;
+    FD_ZERO(&fdset);
+    FD_SET(sockfd, &fdset);
+
+    struct timeval time;
+    time.tv_sec = timeout / 1000;
+    time.tv_usec = timeout % 1000 * 1000;
+
+    int result = select(sockfd + 1, &fdset, NULL, NULL, &time);
+    if (result == -1) {
+        perror("select");
+        return false;
+    } else if (FD_ISSET(sockfd, &fdset)) {
+        m_connected = true;
+        m_socket = std::make_shared<UnixSocket>(sockfd);
+        return true;
+    } else {
+        fprintf(stderr, "connect: timeout\n");
+        return false;
+    }
 }
 
 bool UnixClient::Disconnect() {

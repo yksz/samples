@@ -6,7 +6,7 @@ namespace tcp {
 class Client {
 public:
     virtual ~Client() {};
-    virtual bool Connect(const char* host, int port) = 0;
+    virtual bool Connect(const char* host, int port, int timeout = 60000) = 0; // 60 sec
     virtual bool Disconnect() = 0;
     virtual bool IsConnected() = 0;
     virtual int Recv(char* buf, int len, int flags = 0) = 0;

@@ -15,8 +15,9 @@ int main(int argc, char** argv) {
 
     tcp::Factory& factory = tcp::Factory::GetInstance();
     std::shared_ptr<tcp::Client> client = factory.createClient();
-    client->Connect(host, port);
-    client->Send(msg, strlen(msg));
-    client->Send("\n", 1);
-    client->Disconnect();
+    if (client->Connect(host, port, 5000)) {
+        client->Send(msg, strlen(msg));
+        client->Send("\n", 1);
+        client->Disconnect();
+    }
 }
