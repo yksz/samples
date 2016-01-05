@@ -2,6 +2,7 @@
 #include <cassert>
 #include <cstdio>
 #include <sys/socket.h>
+#include <sys/time.h>
 
 namespace tcp {
 
@@ -50,6 +51,29 @@ int UnixSocket::Send(const char* buf, int len, int flags) {
         perror("send");
     }
     return result;
+}
+
+bool UnixSocket::SetSocketTimeout(int timeout) {
+    if (IsClosed()) {
+        assert(0 && "Already closed");
+        return -1;
+    }
+
+    struct timeval soTimeout;
+    soTimeout.tv_sec = timeout / 1000;
+    soTimeout.tv_usec = timeout % 1000 * 1000;
+
+    int rcvResult = setsockopt(m_socketfd, SOL_SOCKET, SO_RCVTIMEO, &soTimeout, sizeof(soTimeout));
+    if (rcvResult == -1) {
+        perror("setsockopt");
+        return false;
+    }
+    int sndResult = setsockopt(m_socketfd, SOL_SOCKET, SO_SNDTIMEO, &soTimeout, sizeof(soTimeout));
+    if (sndResult == -1) {
+        perror("setsockopt");
+        return false;
+    }
+    return true;
 }
 
 } // namespace tcp

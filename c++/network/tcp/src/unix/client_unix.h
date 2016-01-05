@@ -10,7 +10,7 @@ namespace tcp {
 
 class UnixClient final : public Client {
 public:
-    UnixClient() : m_connected(false) {};
+    UnixClient() : m_connected(false), m_socketTimeout(60000) {}; // 60 sec
     ~UnixClient();
     UnixClient(const UnixClient&) = delete;
     UnixClient& operator=(const UnixClient&) = delete;
@@ -22,10 +22,12 @@ public:
     int Send(const char* buf, int len, int flags);
     bool RecvFully(char* buf, int len, int flags);
     bool SendFully(const char* buf, int len, int flags);
+    void SetSocketTimeout(int timeout);
 
 private:
     std::shared_ptr<UnixSocket> m_socket;
     std::atomic<bool> m_connected;
+    int m_socketTimeout;
 };
 
 } // namespace tcp

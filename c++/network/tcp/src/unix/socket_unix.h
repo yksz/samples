@@ -17,6 +17,7 @@ public:
     bool IsClosed();
     int Recv(char* buf, int len, int flags);
     int Send(const char* buf, int len, int flags);
+    bool SetSocketTimeout(int timeout);
 
 private:
     int m_socketfd;

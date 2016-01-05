@@ -54,6 +54,7 @@ bool UnixClient::Connect(const char* host, int port, int timeout) {
         m_connected = true;
         ioctl(sockfd, FIONBIO, &kBlockingMode);
         m_socket = std::make_shared<UnixSocket>(sockfd);
+        m_socket->SetSocketTimeout(m_socketTimeout);
         return true;
     } else {
         fprintf(stderr, "connect: timeout\n");
@@ -109,6 +110,13 @@ bool UnixClient::SendFully(const char* buf, int len, int flags) {
     }
 
     return m_socket->SendFully(buf, len, flags);
+}
+
+void UnixClient::SetSocketTimeout(int timeout) {
+    m_socketTimeout = timeout;
+    if (m_connected) {
+        m_socket->SetSocketTimeout(m_socketTimeout);
+    }
 }
 
 } // namespace tcp

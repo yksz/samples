@@ -12,6 +12,7 @@ public:
     virtual int Send(const char* buf, int len, int flags = 0) = 0;
     bool RecvFully(char* buf, int len, int flags = 0);
     bool SendFully(const char* buf, int len, int flags = 0);
+    virtual bool SetSocketTimeout(int timeout) = 0;
 };
 
 } // namespace tcp
