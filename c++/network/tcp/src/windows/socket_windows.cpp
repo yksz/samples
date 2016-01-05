@@ -52,4 +52,23 @@ int WindowsSocket::Send(const char* buf, int len, int flags) {
     return result;
 }
 
+bool WindowsSocket::SetSocketTimeout(int timeout) {
+    if (IsClosed()) {
+        assert(0 && "Already closed");
+        return -1;
+    }
+
+    int rcvResult = setsockopt(m_socket, SOL_SOCKET, SO_RCVTIMEO, (const char*) &timeout, sizeof(timeout));
+    if (rcvResult == -1) {
+        fprintf(stderr, "ERROR: setsockopt: %d\n", WSAGetLastError());
+        return false;
+    }
+    int sndResult = setsockopt(m_socket, SOL_SOCKET, SO_SNDTIMEO, (const char*) &timeout, sizeof(timeout));
+    if (sndResult == -1) {
+        fprintf(stderr, "ERROR: setsockopt: %d\n", WSAGetLastError());
+        return false;
+    }
+    return true;
+}
+
 } // namespace tcp

@@ -7,11 +7,14 @@
 
 namespace tcp {
 
+static unsigned long kBlockingMode = 0;
+static unsigned long kNonBlockingMode = 1;
+
 WindowsClient::~WindowsClient() {
     Disconnect();
 }
 
-bool WindowsClient::Connect(const char* host, int port) {
+bool WindowsClient::Connect(const char* host, int port, int timeout) {
     if (m_connected) {
         return true;
     }
@@ -35,14 +38,32 @@ bool WindowsClient::Connect(const char* host, int port) {
     serverAddr.sin_port = htons(port);
     serverAddr.sin_addr.S_un.S_addr = inet_addr(host);
 
-    if (connect(sock, (struct sockaddr*) &serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
-        fprintf(stderr, "ERROR: connect: %d\n", WSAGetLastError());
+    ioctlsocket(sock, FIONBIO, &kNonBlockingMode);
+    connect(sock, (struct sockaddr*) &serverAddr, sizeof(serverAddr));
+
+    fd_set readfds, writefds;
+    FD_ZERO(&readfds);
+    FD_SET(sock, &readfds);
+    writefds = readfds;
+
+    struct timeval connTimeout;
+    connTimeout.tv_sec = timeout / 1000;
+    connTimeout.tv_usec = timeout % 1000 * 1000;
+
+    int result = select(0, &readfds, &writefds, NULL, &connTimeout);
+    if (result == -1) {
+        fprintf(stderr, "ERROR: select: %d\n", WSAGetLastError());
+        return false;
+    } else if (FD_ISSET(sock, &readfds) || FD_ISSET(sock, &writefds)) {
+        m_connected = true;
+        ioctlsocket(sock, FIONBIO, &kBlockingMode);
+        m_socket = std::make_shared<WindowsSocket>(sock);
+        m_socket->SetSocketTimeout(m_socketTimeout);
+        return true;
+    } else {
+        fprintf(stderr, "connect: timeout\n");
         return false;
     }
-
-    m_connected = true;
-    m_socket = std::make_shared<WindowsSocket>(sock);
-    return true;
 }
 
 bool WindowsClient::Disconnect() {
@@ -93,6 +114,13 @@ bool WindowsClient::SendFully(const char* buf, int len, int flags) {
     }
 
     return m_socket->SendFully(buf, len, flags);
+}
+
+void WindowsClient::SetSocketTimeout(int timeout) {
+    m_socketTimeout = timeout;
+    if (m_connected) {
+        m_socket->SetSocketTimeout(m_socketTimeout);
+    }
 }
 
 } // namespace tcp
