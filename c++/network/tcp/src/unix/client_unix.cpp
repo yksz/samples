@@ -10,6 +10,9 @@
 
 namespace tcp {
 
+static const int kBlockingMode = 0;
+static const int kNonBlockingMode = 1;
+
 UnixClient::~UnixClient() {
     Disconnect();
 }
@@ -31,28 +34,25 @@ bool UnixClient::Connect(const char* host, int port, int timeout) {
     serverAddr.sin_port = htons(port);
     serverAddr.sin_addr.s_addr = inet_addr(host);
 
-    int mode = 1;
-    if (ioctl(sockfd, FIONBIO, &mode) == -1) {
-        perror("ioctl");
-        return false;
-    }
-
+    ioctl(sockfd, FIONBIO, &kNonBlockingMode);
     connect(sockfd, (struct sockaddr*) &serverAddr, sizeof(serverAddr));
 
-    fd_set fdset;
-    FD_ZERO(&fdset);
-    FD_SET(sockfd, &fdset);
+    fd_set readfds, writefds;
+    FD_ZERO(&readfds);
+    FD_SET(sockfd, &readfds);
+    writefds = readfds;
 
-    struct timeval time;
-    time.tv_sec = timeout / 1000;
-    time.tv_usec = timeout % 1000 * 1000;
+    struct timeval connTimeout;
+    connTimeout.tv_sec = timeout / 1000;
+    connTimeout.tv_usec = timeout % 1000 * 1000;
 
-    int result = select(sockfd + 1, &fdset, NULL, NULL, &time);
+    int result = select(sockfd + 1, &readfds, &writefds, NULL, &connTimeout);
     if (result == -1) {
         perror("select");
         return false;
-    } else if (FD_ISSET(sockfd, &fdset)) {
+    } else if (FD_ISSET(sockfd, &readfds) || FD_ISSET(sockfd, &writefds)) {
         m_connected = true;
+        ioctl(sockfd, FIONBIO, &kBlockingMode);
         m_socket = std::make_shared<UnixSocket>(sockfd);
         return true;
     } else {
