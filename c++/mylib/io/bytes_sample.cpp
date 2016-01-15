@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <cstring>
 #include <iostream>
-#include "byte_util.h"
+#include "bytes.h"
 
 int main(void) {
     char buf[32];
@@ -19,7 +19,7 @@ int main(void) {
 
     // read
     ByteBuffer r(buf, sizeof(buf), ByteOrder_BIG_ENDIAN);
-    char str2[5];
+    char str2[5] = {};
     r.Get(str2, sizeof(str2));
     printf("%s\n", str2);
     printf("%d\n", r.GetUint8());
