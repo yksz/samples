@@ -6,9 +6,9 @@ int main(void)
     printf("Windows(32-bit or 64-bit)\n");
 #elif defined(__APPLE__) && defined(__MACH__)
     printf("Mac OS X\n");
-#elif __linux
+#elif __linux__
     printf("Linux\n");
-#elif __unix
+#elif __unix__
     printf("UNIX\n");
 #else
     printf("Unknown OS\n");
