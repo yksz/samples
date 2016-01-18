@@ -11,7 +11,7 @@ static long getCurrentThreadID()
 {
 #if defined(__linux)
     return syscall(SYS_gettid);
-#elif defined(__APPLE) && defined(__MACH__)
+#elif defined(__APPLE__) && defined(__MACH__)
     return syscall(SYS_thread_selfid);
 #elif (defined(_WIN32) || defined(_WIN64)) || defined(__CYGWIN__)
     return GetCurrentThreadId();
