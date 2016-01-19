@@ -9,7 +9,7 @@ static void getMACAddress(unsigned char* addr, size_t len)
 {
     int fd;
     struct ifreq ifreq;
-    int i;
+    size_t i;
 
     fd = socket(AF_INET, SOCK_DGRAM, 0);
     ifreq.ifr_addr.sa_family = AF_INET;

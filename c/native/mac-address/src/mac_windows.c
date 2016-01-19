@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <winsock2.h>
 #include <iphlpapi.h>
+
 #pragma comment(lib, "iphlpapi.lib")
 
 static void getMACAddress(unsigned char* addr, size_t len)
@@ -9,7 +10,7 @@ static void getMACAddress(unsigned char* addr, size_t len)
     PIP_ADAPTER_INFO pAdapterInfo;
     PIP_ADAPTER_INFO pAdapter;
     ULONG ulOutBufLen = sizeof(IP_ADAPTER_INFO);
-    int i;
+    size_t i;
 
     pAdapterInfo = (IP_ADAPTER_INFO*) malloc(sizeof(IP_ADAPTER_INFO));
     if (pAdapterInfo == NULL) {
