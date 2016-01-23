@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 static const int kDefaultPort = 8080;
 
@@ -37,7 +38,7 @@ static void acceptClient(int serverfd)
 
     recvAndPrint(clientfd);
 
-    shutdown(clientfd, SHUT_RDWR);
+    close(clientfd);
 }
 
 static void startServer(int port)
@@ -75,7 +76,7 @@ static void startServer(int port)
         acceptClient(sockfd);
     }
 
-    shutdown(sockfd, SHUT_RDWR);
+    close(sockfd);
 }
 
 int main(int argc, char** argv)

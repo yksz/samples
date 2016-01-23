@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 static void sendMsgTo(char* host, int port, char* msg)
 {
@@ -22,7 +23,7 @@ static void sendMsgTo(char* host, int port, char* msg)
 
     sendto(sockfd, msg, strlen(msg), 0, (struct sockaddr*) &send_addr, sizeof(send_addr));
 
-    shutdown(sockfd, SHUT_RDWR);
+    close(sockfd);
 }
 
 int main(int argc, char** argv)
