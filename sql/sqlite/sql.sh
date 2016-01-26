@@ -5,7 +5,7 @@ if [ $# -lt 1 ] ; then
     exit 1
 fi
 
-db='test.db'
-sql=$1
-sqlite3 $db < $sql
-rm $db
+DB_NAME='test.db'
+sql_file=$1
+sqlite3 $DB_NAME < $sql_file
+rm $DB_NAME
