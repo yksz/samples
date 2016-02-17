@@ -14,27 +14,27 @@
 (string-tabulate (lambda (x) (integer->char (+ 97 x))) 3) ; => "abc"
 
 ;;; List & string conversion
-(string->list "abc") ; => '(a b c)
+(string->list "abc") ; => (a b c)
 (list->string '(#\a #\b #\c)) ; => "abc"
 (reverse-list->string '(#\a #\b #\c)) ; => "cba"
 (string-join '("foo" "bar" "baz") ":") ; => "foo:bar:baz"
 (string-length "abc") ; => 3
 (string-ref "abc" 1) ; => #\b
 (string-copy "abc") ; => "abc"
-(substring/shared "abcde" 2) ; ⇒> "cde"
+(substring/shared "abcde" 2) ; => "cde"
 (string-take "abcde" 2) ; => "ab"
-(string-drop "abcde" 2) ; ⇒> "cde"
-(string-take-right "abcde" 2) ; ⇒> "de"
-(string-drop-right "abcde" 2) ; ⇒> "abc"
+(string-drop "abcde" 2) ; => "cde"
+(string-take-right "abcde" 2) ; => "de"
+(string-drop-right "abcde" 2) ; => "abc"
 (string-pad     "325" 5) ; => "  325"
 (string-pad   "71325" 5) ; => "71325"
 (string-pad "8871325" 5) ; => "71325"
 (string-pad-right "325"     5) ; => "325  "
 (string-pad-right "71325"   5) ; => "71325"
 (string-pad-right "8871325" 5) ; => "88713"
-(string-trim       "   abc  ") ; ⇒> "abc  "
-(string-trim-right "   abc  ") ; ⇒> "   abc"
-(string-trim-both  "   abc  ") ; ⇒> "abc"
+(string-trim       "   abc  ") ; => "abc  "
+(string-trim-right "   abc  ") ; => "   abc"
+(string-trim-both  "   abc  ") ; => "abc"
 
 ;;; Modification
 (define s (string-copy "abc"))
@@ -67,7 +67,7 @@
 (string-contains "fizzbuzz" "zz") ; => 2
 (string-contains-ci "FIZZBUZZ" "zz") ; => 2
 
-;;; Prefixes & suffixes
+;;; Prefixes & Suffixes
 (string-prefix-length "foo" "foobar") ; => 3
 (string-prefix-length "bar" "foobar") ; => 0
 (string-suffix-length "foo" "foobar") ; => 0
@@ -87,5 +87,30 @@
 (string-upcase "abc") ; => "ABC"
 (string-downcase "ABC") ; => "abc"
 
-;;; Reverse & append
+;;; Reverse & Append
 (string-reverse "abc") ; => "cba"
+(string-append "abc" "def") ; => "abcdef"
+(string-concatenate '("foo" "bar")) ; => "foobar"
+(string-concatenate-reverse '("foo" "bar")) ; => "barfoo"
+
+;;; Fold, unfold & map
+(string-map char-upcase "abc") ; => "ABC"
+(string-fold cons '() "abc") ; => (#\c #\b #\a)
+(string-fold-right cons '() "abc") ; => (#\a #\b #\c)
+(string-unfold null? car cdr '(#\a #\b #\c)) ; => "abc"
+(string-unfold-right null? car cdr '(#\a #\b #\c)) ; => "cba"
+(string-for-each (lambda(c) (display c))) ; display abc
+(string-for-each-index (lambda(i) (display i))) ; display 123
+
+;;; Replicate & rotate
+(xsubstring "abcdef" 2) ; => "cdefab"
+(xsubstring "abcdef" -2) ; => "efabcd"
+(xsubstring "abc" 0 7) ; => "abcabca"
+
+;;; Miscellaneous: insertion, parsing
+(string-replace "Hello, World!" "Goodbye" 0 5) ; => "Goodbye, World!"
+(string-tokenize "Help make program run, run, RUN!") ; => ("Help" "make" "program" "run," "run," "RUN!")
+
+;;; Filtering & deleting
+(string-filter char-upper-case? "Hello, World!") ; => "HW"
+(string-delete char-upper-case? "Hello, World!") ; => "ello, orld!"
