@@ -1,3 +1,5 @@
+#!/usr/bin/env csi -script
+
 (require-extension lazy-ffi)
 
 #~"libc.so.6"
