@@ -21,7 +21,7 @@ public:
         return *this;
     }
 
-    Object(Object&& other) {
+    Object(Object&&) {
         std::cout << "Object: move constructor" << std::endl;
     }
 
