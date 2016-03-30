@@ -9,6 +9,7 @@ static int getMACAddressByName(char* name, unsigned char* addr, size_t len)
 {
     int fd;
     struct ifreq ifr;
+    int ok = 0;
 
     fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (fd == -1) {
@@ -17,13 +18,14 @@ static int getMACAddressByName(char* name, unsigned char* addr, size_t len)
     ifr.ifr_addr.sa_family = AF_INET;
     strncpy(ifr.ifr_name, name, IFNAMSIZ - 1);
     if (ioctl(fd, SIOCGIFHWADDR, &ifr) == -1) {
-        close(fd);
-        return 0;
+        goto cleanup;
     }
-    close(fd);
-
     memcpy(addr, ifr.ifr_hwaddr.sa_data, len);
-    return 1;
+    ok = 1;
+
+cleanup:
+    close(fd);
+    return ok;
 }
 
 
@@ -34,7 +36,7 @@ static int getMACAddressOfFirstInterface(unsigned char* addr, size_t len)
     struct ifconf ifc;
     int nifs;
     int i;
-    int isfirst = 1;
+    int ok = 0;
 
     fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (fd == -1) {
@@ -43,8 +45,7 @@ static int getMACAddressOfFirstInterface(unsigned char* addr, size_t len)
     ifc.ifc_len = sizeof(ifr);
     ifc.ifc_ifcu.ifcu_buf = (void*) ifr;
     if (ioctl(fd, SIOCGIFCONF, &ifc) == -1) {
-        close(fd);
-        return 0;
+        goto cleanup;
     }
     nifs = ifc.ifc_len / sizeof(struct ifreq);
     for (i = 0; i < nifs; i++) {
@@ -54,12 +55,14 @@ static int getMACAddressOfFirstInterface(unsigned char* addr, size_t len)
         }
         if (ioctl(fd, SIOCGIFHWADDR, &ifr[i]) != -1) {
             memcpy(addr, ifr[i].ifr_hwaddr.sa_data, len);
-            close(fd);
-            return 1;
+            ok = 1;
+            goto cleanup;
         }
     }
+
+cleanup:
     close(fd);
-    return 0;
+    return ok;
 }
 
 int main(int argc, char* argv[])
