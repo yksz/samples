@@ -21,18 +21,18 @@ int main(int argc, char* argv[])
     int result = EXIT_FAILURE;
     FILE *src, *dst;
     if ((src = fopen(src_name, "r")) == NULL) {
-        goto SRC_ERROR;
+        goto error_src;
     }
     if ((dst = fopen(dst_name, "w")) == NULL) {
-        goto DST_ERROR;
+        goto error_dst;
     }
 
     copy(src, dst);
     result = EXIT_SUCCESS;
 
     fclose(dst);
-DST_ERROR:
+error_dst:
     fclose(src);
-SRC_ERROR:
+error_src:
     return result;
 }
