@@ -43,14 +43,14 @@ static int getMACAddressOfFirstInterface(unsigned char* addr, size_t len)
         return 0;
     }
     ifc.ifc_len = sizeof(ifr);
-    ifc.ifc_ifcu.ifcu_buf = (void*) ifr;
+    ifc.ifc_req = ifr;
     if (ioctl(fd, SIOCGIFCONF, &ifc) == -1) {
         goto cleanup;
     }
     nifs = ifc.ifc_len / sizeof(struct ifreq);
     for (i = 0; i < nifs; i++) {
         if (ioctl(fd, SIOCGIFFLAGS, &ifr[i]) != -1
-                && ifr[i].ifr_flags & IFF_LOOPBACK) { /* loopback */
+                && ifr[i].ifr_flags & IFF_LOOPBACK) { /* ignore if loopback */
             continue;
         }
         if (ioctl(fd, SIOCGIFHWADDR, &ifr[i]) != -1) {
