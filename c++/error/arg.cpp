@@ -6,8 +6,7 @@ using error_ptr = std::unique_ptr<error>;
 using runtime_error_ptr = std::unique_ptr<std::runtime_error>;
 
 static int calc(int x, int y, error_ptr& err) {
-    auto rt_err = runtime_error_ptr(new std::runtime_error("calc error"));
-    err = std::move(rt_err);
+    err = runtime_error_ptr(new std::runtime_error("calc error"));
     return 0;
 }
 
