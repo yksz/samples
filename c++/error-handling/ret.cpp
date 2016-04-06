@@ -1,20 +1,18 @@
 #include <cstdio>
 #include <memory>
-#include <tuple>
+#include <stdexcept>
 
 using error = std::exception;
 using error_ptr = std::unique_ptr<error>;
 using runtime_error_ptr = std::unique_ptr<std::runtime_error>;
 
-static std::tuple<int, runtime_error_ptr> calc(int x, int y) {
-    auto err = runtime_error_ptr(new std::runtime_error("calc error"));
-    return std::make_tuple(0, std::move(err));
+static runtime_error_ptr calc(int x, int y, int& result) {
+    return runtime_error_ptr(new std::runtime_error("calc error"));
 }
 
 int main(void) {
     int result;
-    error_ptr err;
-    std::tie(result, err) = calc(10, 20);
+    error_ptr err = calc(10, 20, result);
     if (err != nullptr) {
         printf("%s\n", err->what());
     } else {
