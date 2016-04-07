@@ -1,7 +1,5 @@
 #include <cstdio>
 #include <map>
-#include <memory>
-#include <stdexcept>
 #include <string>
 
 #define NEW_ERROR(err) newError(err, __FILE__, __LINE__)
