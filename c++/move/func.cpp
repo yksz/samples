@@ -12,6 +12,13 @@ static void func(Object&& o) {
 static Object func() {
     std::cout << "\nfunc()" << std::endl;
 
+    Object o;
+    return o;
+}
+
+static Object func_optimize() {
+    std::cout << "\nfunc_optimize()" << std::endl;
+
     return Object();
 }
 
@@ -27,6 +34,8 @@ int main(void) {
     func(o);
     func(std::move(o));
     func();
+    func_optimize();
     func_move();
+    std::cout << std::endl;
     return 0;
 }
