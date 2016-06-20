@@ -1,11 +1,8 @@
 ﻿using Mqtt;
 using Mqtt.Messages;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace MqttApp
 {
@@ -16,19 +13,27 @@ namespace MqttApp
 
         static void Main(string[] args)
         {
-            using (var countdown = new CountdownEvent(1))
+            using (var countdown = new CountdownEvent(2))
             {
                 var subscriber = new Subscriber(MqttBrokerAddress, MqttBrokerPort);
-                subscriber.SubscribeHello((msg, topic) =>
+                subscriber.Subscribe(Topic.Hello, (topic, msgStr) =>
                 {
+                    var msg = JsonConvert.DeserializeObject<HelloMessage>(msgStr);
+                    Console.WriteLine("Topic: " + topic);
+                    Console.WriteLine("Message: " + msg);
+                    countdown.Signal();
+                });
+                subscriber.Subscribe(Topic.Goodbye, (topic, msgStr) =>
+                {
+                    var msg = JsonConvert.DeserializeObject<GoodbyeMessage>(msgStr);
                     Console.WriteLine("Topic: " + topic);
                     Console.WriteLine("Message: " + msg);
                     countdown.Signal();
                 });
 
                 var publisher = new Publisher(MqttBrokerAddress, MqttBrokerPort);
-                var hello = new MsgHello() { Name = "John", Date = DateTime.Now };
-                publisher.PublishHello(hello);
+                publisher.Publish(Topic.Hello, new HelloMessage() { Name = "John Smith", Date = DateTime.Now });
+                publisher.Publish(Topic.Goodbye, new GoodbyeMessage() { Name = "Jane Smith", Date = DateTime.Now });
                 countdown.Wait();
             }
             Environment.Exit(0);

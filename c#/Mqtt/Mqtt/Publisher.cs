@@ -1,10 +1,7 @@
 ﻿using Mqtt.Messages;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using uPLibrary.Networking.M2Mqtt;
 
 namespace Mqtt
@@ -26,10 +23,10 @@ namespace Mqtt
             Client.Disconnect();
         }
 
-        public void PublishHello(MsgHello msg)
+        public void Publish<T>(string topic, T msg) where T : IMqttMessage
         {
             var jsonStr = JsonConvert.SerializeObject(msg);
-            Client.Publish(Topic.Hello, Encoding.UTF8.GetBytes(jsonStr));
+            Client.Publish(topic, Encoding.UTF8.GetBytes(jsonStr));
         }
     }
 }

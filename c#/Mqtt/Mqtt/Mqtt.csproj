@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Messages\MsgHello.cs" />
+    <Compile Include="Messages\GoodbyeMessage.cs" />
+    <Compile Include="Messages\HelloMessage.cs" />
+    <Compile Include="Messages\IMqttMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publisher.cs" />
     <Compile Include="QoS.cs" />
