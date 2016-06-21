@@ -1,6 +1,7 @@
 ﻿using Mqtt;
 using Mqtt.Messages;
 using Newtonsoft.Json;
+using NLog;
 using System;
 using System.Threading;
 
@@ -11,6 +12,8 @@ namespace MqttApp
         const string MqttBrokerAddress = "127.0.0.1";
         const int MqttBrokerPort = 1883;
 
+        private static Logger _log = LogManager.GetCurrentClassLogger();
+
         static void Main(string[] args)
         {
             using (var countdown = new CountdownEvent(2))
@@ -19,15 +22,15 @@ namespace MqttApp
                 subscriber.Subscribe(Topic.Hello, (topic, msgStr) =>
                 {
                     var msg = JsonConvert.DeserializeObject<HelloMessage>(msgStr);
-                    Console.WriteLine("Topic: " + topic);
-                    Console.WriteLine("Message: " + msg);
+                    _log.Info("Topic: " + topic);
+                    _log.Info("Message: " + msg);
                     countdown.Signal();
                 });
                 subscriber.Subscribe(Topic.Goodbye, (topic, msgStr) =>
                 {
                     var msg = JsonConvert.DeserializeObject<GoodbyeMessage>(msgStr);
-                    Console.WriteLine("Topic: " + topic);
-                    Console.WriteLine("Message: " + msg);
+                    _log.Info("Topic: " + topic);
+                    _log.Info("Message: " + msg);
                     countdown.Signal();
                 });
 
