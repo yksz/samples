@@ -8,25 +8,25 @@ namespace Mqtt
 {
     public class Publisher
     {
-        private readonly MqttClient Client;
-        private readonly string ClientId;
+        private readonly MqttClient _client;
+        private readonly string _clientId;
 
         public Publisher(string hostName, int port)
         {
-            Client = new MqttClient(hostName, port, false, null, null, MqttSslProtocols.None);
-            ClientId = Guid.NewGuid().ToString();
-            Client.Connect(ClientId);
+            _client = new MqttClient(hostName, port, false, null, null, MqttSslProtocols.None);
+            _clientId = Guid.NewGuid().ToString();
+            _client.Connect(_clientId);
         }
 
         ~Publisher()
         {
-            Client.Disconnect();
+            _client.Disconnect();
         }
 
         public void Publish<T>(string topic, T msg) where T : IMqttMessage
         {
             var jsonStr = JsonConvert.SerializeObject(msg);
-            Client.Publish(topic, Encoding.UTF8.GetBytes(jsonStr));
+            _client.Publish(topic, Encoding.UTF8.GetBytes(jsonStr));
         }
     }
 }

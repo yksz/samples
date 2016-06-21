@@ -7,20 +7,20 @@ namespace Mqtt
 {
     public class Subscriber
     {
-        private readonly MqttClient Client;
-        private readonly string ClientId;
-        private readonly Dictionary<string, OnMessage> Handlers = new Dictionary<string, OnMessage>();
+        private readonly MqttClient _client;
+        private readonly string _clientId;
+        private readonly Dictionary<string, OnMessage> _handlers = new Dictionary<string, OnMessage>();
 
         public Subscriber(string hostName, int port)
         {
-            Client = new MqttClient(hostName, port, false, null, null, MqttSslProtocols.None);
-            ClientId = Guid.NewGuid().ToString();
-            Client.Connect(ClientId);
-            Client.MqttMsgPublishReceived += (sender, e) =>
+            _client = new MqttClient(hostName, port, false, null, null, MqttSslProtocols.None);
+            _clientId = Guid.NewGuid().ToString();
+            _client.Connect(_clientId);
+            _client.MqttMsgPublishReceived += (sender, e) =>
             {
-                if (Handlers.ContainsKey(e.Topic))
+                if (_handlers.ContainsKey(e.Topic))
                 {
-                    var handler = Handlers[e.Topic];
+                    var handler = _handlers[e.Topic];
                     var jsonStr = Encoding.UTF8.GetString(e.Message);
                     handler(e.Topic, jsonStr);
                 } 
@@ -29,15 +29,15 @@ namespace Mqtt
 
         ~Subscriber()
         {
-            Client.Disconnect();
+            _client.Disconnect();
         }
 
         public delegate void OnMessage(string topic, string message);
 
-        public void Subscribe(string topic, OnMessage onMessage)
+        public void Subscribe(string topic, OnMessage handler)
         {
-            Handlers.Add(topic, onMessage);
-            Client.Subscribe(new string[] { topic }, new byte[] { QoS.Get(topic) });
+            _handlers.Add(topic, handler);
+            _client.Subscribe(new string[] { topic }, new byte[] { QoS.Get(topic) });
         }
     }
 }

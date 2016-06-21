@@ -6,7 +6,7 @@ namespace DigitalClock
     public partial class DigitalClock : Form
     {
         const int Interval = 1000;
-        System.Windows.Forms.Timer timer;
+        System.Windows.Forms.Timer _timer;
 
         public DigitalClock()
         {
@@ -14,13 +14,13 @@ namespace DigitalClock
 
             UpdateTimeLabel();
 
-            timer = new System.Windows.Forms.Timer();
-            timer.Interval = Interval;
-            timer.Tick += (sender, e) =>
+            _timer = new System.Windows.Forms.Timer();
+            _timer.Interval = Interval;
+            _timer.Tick += (sender, e) =>
             {
                 UpdateTimeLabel();
             };
-            timer.Start();
+            _timer.Start();
         }
 
         void UpdateTimeLabel()
