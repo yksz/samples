@@ -5,10 +5,10 @@ import (
 	"flag"
 )
 
-var port string
+var port int
 
 func init() {
-	flag.StringVar(&port, "port", "8080", "port number")
+	flag.IntVar(&port, "port", 8080, "port number")
 	flag.Parse()
 }
 

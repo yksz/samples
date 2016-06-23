@@ -4,21 +4,22 @@ import (
 	"io"
 	"log"
 	"net"
+	"strconv"
 )
 
 type Server struct {
-	port    string
+	port    int
 	clients map[int]*client
 	message chan string
 }
 
-func NewServer(port string) *Server {
+func NewServer(port int) *Server {
 	return &Server{port, make(map[int]*client), make(chan string, 1)}
 }
 
 func (s *Server) Start() {
-	log.Print("the chat server is listening on port " + s.port)
-	ln, err := net.Listen("tcp", ":"+s.port)
+	log.Print("the chat server is listening on port " + strconv.Itoa(s.port))
+	ln, err := net.Listen("tcp", ":"+strconv.Itoa(s.port))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -34,26 +35,27 @@ func (s *Server) accept(listener net.Listener) {
 			log.Print(err)
 			continue
 		}
-		client := newClient(conn)
-		s.clients[client.id] = client
-		go s.receive(client)
+		c := newClient(conn)
+		s.clients[c.id] = c
+		go s.receive(c)
 	}
 }
 
-func (s *Server) receive(client *client) {
-	log.Printf("connect: %v", client)
+func (s *Server) receive(c *client) {
+	log.Printf("connect: %v", c)
 	for {
-		line, err := client.reader.ReadBytes('\n')
-		if err != nil {
-			if err == io.EOF {
-				log.Printf("disconnect: %v", client)
-				delete(s.clients, client.id)
-				return
-			}
-			log.Print(err)
-		} else {
-			s.message <- string(line)
+		line, err := c.reader.ReadString('\n')
+		if err == io.EOF {
+			log.Printf("disconnect: %v", c)
+			delete(s.clients, c.id)
+			c.conn.Close()
+			return
 		}
+		if err != nil {
+			log.Print(err)
+			continue
+		}
+		s.message <- line
 	}
 }
 
@@ -61,9 +63,9 @@ func (s *Server) broadcast() {
 	for {
 		msg := <-s.message
 		log.Print("message=" + msg)
-		for _, client := range s.clients {
-			client.writer.WriteString(msg)
-			client.writer.Flush()
+		for _, c := range s.clients {
+			c.writer.WriteString(msg)
+			c.writer.Flush()
 		}
 	}
 }

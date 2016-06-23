@@ -10,15 +10,16 @@ var id int
 
 type client struct {
 	id     int
-	conn   *net.Conn
+	conn   net.Conn
 	reader *bufio.Reader
 	writer *bufio.Writer
 }
 
 func newClient(conn net.Conn) *client {
 	id++
-	return &client{id,
-		&conn,
+	return &client{
+		id,
+		conn,
 		bufio.NewReader(conn),
 		bufio.NewWriter(conn)}
 }
