@@ -20,7 +20,10 @@ namespace Mqtt
 
         ~Publisher()
         {
-            _client.Disconnect();
+            if (_client.IsConnected)
+            {
+                _client.Disconnect();
+            }
         }
 
         public void Publish<T>(string topic, T msg) where T : IMqttMessage
