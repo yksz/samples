@@ -22,6 +22,11 @@ namespace GraphApp
             return new System.Drawing.Point(X, Y);
         }
 
+        public double GetDistance(Node other)
+        {
+            return Math.Sqrt(Math.Pow(this.X - other.X, 2) + Math.Pow(this.Y - other.Y, 2));
+        }
+
         public int CompareTo(Node other)
         {
             if (this.X < other.X)

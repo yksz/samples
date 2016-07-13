@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,8 +18,12 @@ namespace GraphApp
     {
         const int NodeDiameter = 30;
         const int NodeRadius = NodeDiameter / 2;
-        private static Brush NodeBrush = Brushes.Blue;
+        const int EdgeDiameter = 10;
+        const int EdgeRadius = EdgeDiameter / 2;
+        const int ArrowSize = 10;
+        private static Brush NodeBrush = Brushes.LightSkyBlue;
         private static Brush SelectedNodeBrush = Brushes.Red;
+        private static Brush EdgeBrush = Brushes.Black;
         private static Pen EdgePen = new Pen(Color.Black, 1);
         private static Pen ShortestPathPen = new Pen(Color.Red, 2);
 
@@ -29,17 +34,6 @@ namespace GraphApp
         public GraphForm()
         {
             InitializeComponent();
-        }
-
-        private Node GetNode(Point p)
-        {
-            return _graph.Vertices.SingleOrDefault(v => IsPointWithinCircle(p, v.ToPoint(), NodeRadius));
-        }
-
-        private static bool IsPointWithinCircle(Point p, Point o, int radius)
-        {
-            return o.X - radius < p.X && p.X < o.X + radius
-                && o.Y - radius < p.Y && p.Y < o.Y + radius;
         }
 
         private void pictureBox_MouseClick(object sender, MouseEventArgs e)
@@ -62,21 +56,22 @@ namespace GraphApp
 
         private void MouseLeftClick(object sender, MouseEventArgs e)
         {
-            var node = GetNode(e.Location);
-            if (node == null)
-            {
-                _graph.AddVertex(new Node(e.Location));
-                _selectedNode = null;
-            }
-            else
-            {
-                _shortestPath = null;
-            }
-            pictureBox.Refresh();
         }
 
         private void MouseRightClick(object sender, MouseEventArgs e)
         {
+            if (_selectedNode == null)
+            {
+                return;
+            }
+            var node = GetNode(e.Location);
+            if (node == null)
+            {
+                return;
+            }
+            var path = FindShortestPath(_selectedNode, node);
+            _shortestPath = path;
+            pictureBox.Refresh();
         }
 
         private void MouseMiddleClick(object sender, MouseEventArgs e)
@@ -94,10 +89,6 @@ namespace GraphApp
                 case MouseButtons.Left:
                     MouseLeftDown(sender, e);
                     break;
-
-                case MouseButtons.Right:
-                    MouseRightDown(sender, e);
-                    break;
             }
         }
 
@@ -112,10 +103,6 @@ namespace GraphApp
             pictureBox.Refresh();
         }
 
-        private void MouseRightDown(object sender, MouseEventArgs e)
-        {
-        }
-
         private void pictureBox_MouseUp(object sender, MouseEventArgs e)
         {
             switch (e.Button)
@@ -123,53 +110,55 @@ namespace GraphApp
                 case MouseButtons.Left:
                     MouseLeftUp(sender, e);
                     break;
-
-                case MouseButtons.Right:
-                    MouseRightUp(sender, e);
-                    break;
             }
         }
 
         private void MouseLeftUp(object sender, MouseEventArgs e)
         {
-            if (_selectedNode == null)
-            {
-                return;
-            }
             var node = GetNode(e.Location);
-            if (node == null || node == _selectedNode)
+            if (node == null) // create node
             {
-                return;
+                var newNode = new Node(e.Location);
+                if (_graph.Vertices.Any(v => v.GetDistance(newNode) <= NodeDiameter)) // overlap?
+                {
+                    return;
+                }
+                _graph.AddVertex(newNode);
             }
-            var edge = new Edge<Node>(_selectedNode, node);
-            _graph.AddEdge(edge);
-            _selectedNode = null;
+            else // click node
+            {
+                if (_selectedNode == null)
+                {
+                    return;
+                }
+                if (node == _selectedNode) // same node
+                {
+                    // nothing
+                }
+                else // other node
+                {
+                    var edge = new Edge<Node>(_selectedNode, node);
+                    _graph.AddEdge(edge);
+                }
+            }
+            _shortestPath = null;
             pictureBox.Refresh();
         }
 
-        private void MouseRightUp(object sender, MouseEventArgs e)
+        private Node GetNode(Point p)
         {
-            if (_selectedNode == null)
-            {
-                return;
-            }
-            var node = GetNode(e.Location);
-            if (node == null)
-            {
-                return;
-            }
-            var path = FindShortestPath(_selectedNode, node);
-            if (path == null)
-            {
-                return;
-            }
-            _shortestPath = path;
-            pictureBox.Refresh();
+            return _graph.Vertices.SingleOrDefault(v => IsPointWithinCircle(p, v.ToPoint(), NodeRadius));
+        }
+
+        private static bool IsPointWithinCircle(Point p, Point o, int radius)
+        {
+            return o.X - radius < p.X && p.X < o.X + radius
+                && o.Y - radius < p.Y && p.Y < o.Y + radius;
         }
 
         private IEnumerable<Edge<Node>> FindShortestPath(Node source, Node target)
         {
-            Func<Edge<Node>, double> edgeCost = (e) => GetDistance(e.Source, e.Target);
+            Func<Edge<Node>, double> edgeCost = e => e.Source.GetDistance(e.Target);
             var dijkstra = new DijkstraShortestPathAlgorithm<Node, Edge<Node>>(_graph, edgeCost);
             var predecessors = new VertexPredecessorRecorderObserver<Node, Edge<Node>>();
             using (predecessors.Attach(dijkstra))
@@ -179,11 +168,6 @@ namespace GraphApp
             IEnumerable<Edge<Node>> path;
             predecessors.TryGetPath(target, out path);
             return path;
-        }
-
-        private static double GetDistance(Node n1, Node n2)
-        {
-            return Math.Sqrt(Math.Pow(n1.X - n2.X, 2) + Math.Pow(n1.Y - n2.Y, 2));
         }
 
         private void pictureBox_Paint(object sender, PaintEventArgs e)
@@ -205,7 +189,10 @@ namespace GraphApp
             }
             foreach (var e in _graph.Edges)
             {
-                g.DrawLine(EdgePen, e.Source.ToPoint(), e.Target.ToPoint());
+                var source = e.Source.ToPoint();
+                var target = e.Target.ToPoint();
+                g.DrawLine(EdgePen, source, target);
+                DrawArrow(g, source, target);
             }
             if (_shortestPath != null)
             {
@@ -214,6 +201,28 @@ namespace GraphApp
                     g.DrawLine(ShortestPathPen, e.Source.ToPoint(), e.Target.ToPoint());
                 }
             }
+        }
+
+        private void DrawArrow(Graphics g, Point source, Point target)
+        {
+            Matrix rotateMatrix = new Matrix();
+            rotateMatrix.RotateAt((float)GetDegree(target, source), target);
+            g.Transform = rotateMatrix;
+            g.FillPolygon(EdgeBrush, new Point[] { target,
+                    new Point(target.X + ArrowSize, target.Y + ArrowSize / 2),
+                    new Point(target.X + ArrowSize, target.Y - ArrowSize / 2) });
+            g.Transform = new Matrix();
+        }
+
+        private double GetDegree(Point o, Point p)
+        {
+            double radian = Math.Atan2(p.Y - o.Y, p.X - o.X);
+            return ToDegree(radian);
+        }
+
+        private static double ToDegree(double radian)
+        {
+            return radian * 180 / Math.PI;
         }
     }
 }
