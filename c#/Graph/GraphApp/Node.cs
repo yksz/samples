@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace GraphApp
 {
-    class Node : IComparable<Node>
+    public class Node : IComparable<Node>
     {
+        [XmlAttribute("x")]
         public int X { get; set; }
+
+        [XmlAttribute("y")]
         public int Y { get; set; }
+
+        public Node() {}
 
         public Node(System.Drawing.Point p)
         {

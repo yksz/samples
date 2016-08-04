@@ -1,6 +1,7 @@
 ﻿using QuickGraph;
 using QuickGraph.Algorithms.Observers;
 using QuickGraph.Algorithms.ShortestPath;
+using QuickGraph.Serialization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,21 +12,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace GraphApp
 {
     public partial class GraphForm : Form
     {
-        const int NodeDiameter = 30;
-        const int NodeRadius = NodeDiameter / 2;
-        const int EdgeDiameter = 10;
-        const int EdgeRadius = EdgeDiameter / 2;
-        const int ArrowSize = 10;
-        private static Brush NodeBrush = Brushes.LightSkyBlue;
-        private static Brush SelectedNodeBrush = Brushes.Red;
-        private static Brush EdgeBrush = Brushes.Black;
-        private static Pen EdgePen = new Pen(Color.Black, 1);
-        private static Pen ShortestPathPen = new Pen(Color.Red, 2);
+        private const int NodeDiameter = 30;
+        private const int NodeRadius = NodeDiameter / 2;
+        private const int EdgeDiameter = 10;
+        private const int EdgeRadius = EdgeDiameter / 2;
+        private const int ArrowSize = 10;
+        private const string GraphFileName = "graph.graphml";
+        private static readonly Brush NodeBrush = Brushes.LightSkyBlue;
+        private static readonly Brush SelectedNodeBrush = Brushes.Red;
+        private static readonly Brush EdgeBrush = Brushes.Black;
+        private static readonly Pen EdgePen = new Pen(Color.Black, 1);
+        private static readonly Pen ShortestPathPen = new Pen(Color.Red, 2);
 
         private AdjacencyGraph<Node, Edge<Node>> _graph = new AdjacencyGraph<Node, Edge<Node>>();
         private Node _selectedNode;
@@ -34,6 +37,48 @@ namespace GraphApp
         public GraphForm()
         {
             InitializeComponent();
+        }
+
+        private void GraphForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.R: // read
+                    _graph = ReadGraph(GraphFileName);
+                    _selectedNode = null;
+                    _shortestPath = null;
+                    pictureBox.Refresh();
+                    break;
+
+                case Keys.W: // write
+                    WriteGraph(GraphFileName, _graph);
+                    break;
+            }
+        }
+
+        private static AdjacencyGraph<Node, Edge<Node>> ReadGraph(string filename)
+        {
+            var graph = new AdjacencyGraph<Node, Edge<Node>>();
+            using (var reader = XmlReader.Create(filename))
+            {
+                graph.DeserializeFromGraphML(reader,
+                        id => new Node(),
+                        (source, target, id) => new Edge<Node>(source, target));
+            }
+            return graph;
+        }
+
+        private void WriteGraph(string filename, AdjacencyGraph<Node, Edge<Node>> graph)
+        {
+            var settings = new XmlWriterSettings
+            {
+                Indent = true,
+                IndentChars = "  ",
+            };
+            using (var writer = XmlWriter.Create(filename, settings))
+            {
+                graph.SerializeToGraphML<Node, Edge<Node>, AdjacencyGraph<Node, Edge<Node>>>(writer);
+            }
         }
 
         private void pictureBox_MouseClick(object sender, MouseEventArgs e)

@@ -55,6 +55,7 @@
             this.Controls.Add(this.pictureBox);
             this.Name = "GraphForm";
             this.Text = "GraphForm";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GraphForm_KeyDown);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
