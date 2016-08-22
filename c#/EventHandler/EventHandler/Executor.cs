@@ -4,7 +4,7 @@ namespace EventHandler
 {
     public class Executor : IExecutor
     {
-        public event TaskCompletedEventHandler TaskCompleted;
+        public event TaskCompletedEventHandler TaskCompleted = delegate { };
 
         public void ExecuteAsync(int taskID)
         {
