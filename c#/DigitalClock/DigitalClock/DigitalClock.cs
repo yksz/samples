@@ -5,25 +5,22 @@ namespace DigitalClock
 {
     public partial class DigitalClock : Form
     {
-        const int Interval = 1000;
-        System.Windows.Forms.Timer _timer;
-
         public DigitalClock()
         {
             InitializeComponent();
-
-            UpdateTimeLabel();
-
-            _timer = new System.Windows.Forms.Timer();
-            _timer.Interval = Interval;
-            _timer.Tick += (sender, e) =>
-            {
-                UpdateTimeLabel();
-            };
-            _timer.Start();
         }
 
-        void UpdateTimeLabel()
+        private void DigitalClock_Load(object sender, EventArgs e)
+        {
+            UpdateTime();
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            UpdateTime();
+        }
+
+        private void UpdateTime()
         {
             DateTime time = DateTime.Now;
             timeLabel.Text = time.ToString("HH:mm.ss");

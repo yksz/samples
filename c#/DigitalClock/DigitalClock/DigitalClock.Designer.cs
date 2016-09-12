@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.timeLabel = new System.Windows.Forms.Label();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // timeLabel
@@ -40,6 +42,12 @@
             this.timeLabel.Size = new System.Drawing.Size(0, 75);
             this.timeLabel.TabIndex = 0;
             // 
+            // timer
+            // 
+            this.timer.Enabled = true;
+            this.timer.Interval = 1000;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            // 
             // DigitalClock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -48,6 +56,7 @@
             this.Controls.Add(this.timeLabel);
             this.Name = "DigitalClock";
             this.Text = "DigitalClock";
+            this.Load += new System.EventHandler(this.DigitalClock_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -56,6 +65,7 @@
         #endregion
 
         private System.Windows.Forms.Label timeLabel;
+        private System.Windows.Forms.Timer timer;
     }
 }
 
