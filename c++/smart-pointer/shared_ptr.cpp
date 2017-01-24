@@ -27,7 +27,7 @@ private:
     void operator=(const Book&);
 };
 
-} // unnamed namespace
+} // namespace
 
 static void readBook(const std::shared_ptr<Book>& book) {
     std::cout << "Read Book[name=" << book->GetName() << "]" << std::endl;
